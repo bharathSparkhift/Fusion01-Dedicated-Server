@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System;
 
 namespace Game15Server
 {
@@ -22,18 +24,11 @@ namespace Game15Server
         }
 
         #region Serialize Private Fields
-        /// <summary>
-        /// Server network runner
-        /// </summary>
-        [SerializeField] private NetworkRunner _serverRunner;
-        /// <summary>
-        /// Session name
-        /// </summary>
-        [SerializeField] private string _sessionName;
-        /// <summary>
-        /// Port number
-        /// </summary>
-        [SerializeField] private ushort _port = 27015;
+        
+        [SerializeField] private NetworkRunner  serverRunner;
+        [SerializeField] private TMP_InputField sessionName;
+        [SerializeField] private TMP_InputField portNumber;
+        [SerializeField] private TMP_InputField playerCount;
         #endregion
 
         #region Private Fields
@@ -53,34 +48,45 @@ namespace Game15Server
         // Start is called before the first frame update
         async void Start()
         {
+            StartServer();
+#if !UNITY_SERVER
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
+#endif
 
-            // SessionProperties.Add();
+        }
+#endregion
+
+        /// <summary>
+        /// Start server
+        /// </summary>
+        public async void StartServer()
+        {
 
 #if UNITY_SERVER
-            var runner = Instantiate(_serverRunner);
-            runner.name = "Server";
-    
+
+            serverRunner.name = "<color=red>server</color>";
 
             var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
 
             appSettings.FixedRegion = region.ToString().ToLower();  // Region.asia.ToString().ToLower();
 
-            StartGameArgs startGameArgs = new StartGameArgs() {
-                SessionName = _sessionName,
+            StartGameArgs startGameArgs = new StartGameArgs()
+            {
+                SessionName = sessionName.text.Trim(),
                 GameMode = GameMode.Server,
-                SceneManager = runner.gameObject.AddComponent<NetworkSceneManagerDefault>(),
+                SceneManager = serverRunner.gameObject.AddComponent<NetworkSceneManagerDefault>(),
                 Scene = 2,
-                Address = NetAddress.Any(_port),
+                Address = NetAddress.Any(ushort.Parse(portNumber.text.Trim())),
                 CustomPhotonAppSettings = appSettings,
-                PlayerCount = 200,
+                PlayerCount = Int32.Parse(playerCount.text.Trim()),
                 DisableClientSessionCreation = false,
 
-                
+
             };
-            var startGame = await runner.StartGame(startGameArgs);
-            
-            
-            if(startGame.Ok == true )
+            var startGame = await serverRunner.StartGame(startGameArgs);
+
+
+            if (startGame.Ok == true)
             {
                 Debug.Log($"Result {startGame.Ok} :\n Game args {startGameArgs}");
             }
@@ -88,13 +94,8 @@ namespace Game15Server
             {
                 Debug.LogError($"Result {startGame.Ok} :\n Game args {startGameArgs}");
             }
-
-#else
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
 #endif
-
         }
-#endregion
 
 
     }
