@@ -26,6 +26,7 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Cinemachine;
 --assembly-defines=websocket-sharp;
 --assembly-defines=Fusion.Common;
 --assembly-defines=NanoSockets;
@@ -94,6 +95,7 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Cinemachine;
 --assembly-defines=websocket-sharp;
 --assembly-defines=Fusion.Common;
 --assembly-defines=NanoSockets;
@@ -160,6 +162,7 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Cinemachine;
 --assembly-defines=websocket-sharp;
 --assembly-defines=Fusion.Common;
 --assembly-defines=NanoSockets;
@@ -232,6 +235,7 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Cinemachine;
 --assembly-defines=websocket-sharp;
 --assembly-defines=Fusion.Common;
 --assembly-defines=NanoSockets;

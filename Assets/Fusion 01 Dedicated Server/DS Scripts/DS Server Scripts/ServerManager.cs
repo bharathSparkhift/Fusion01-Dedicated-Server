@@ -34,26 +34,34 @@ namespace Game15Server
         [SerializeField] private TMP_Dropdown   serverRegion;
         #endregion
 
-
         #region private fields
         Region region;
         #endregion
 
+        private void Start()
+        {
+#if UNITY_SERVER
+            StartServer();
+            Debug.Log("Server Platform");
 
-        #region Monobehaviour callbacks
-       
-#endregion
+            // Instantiate network runner for server
+             
+            Instantiate(serverRunner);
+#endif
+        }
 
         /// <summary>
-        /// Start server
+        /// Start server OnButtonClick()
         /// </summary>
         public async void StartServer()
         {
-            serverRunner.name = $"server {sessionName.text.Trim()}";
 
-            var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
+            
+            serverRunner.name = $"Server Network Runner";
 
-            appSettings.FixedRegion = region.ToString().ToLower(); 
+            var photonAppSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
+
+            photonAppSettings.FixedRegion = region.ToString().Trim();
 
             StartGameArgs startGameArgs = new StartGameArgs()
             {
@@ -62,7 +70,7 @@ namespace Game15Server
                 SceneManager = serverRunner.gameObject.AddComponent<NetworkSceneManagerDefault>(),
                 Scene = 2,
                 Address = NetAddress.Any(ushort.Parse(portNumber.text.Trim())),
-                CustomPhotonAppSettings = appSettings,
+                CustomPhotonAppSettings = photonAppSettings,
                 PlayerCount = Int32.Parse(playerCount.text.Trim()),
                 DisableClientSessionCreation = false,
 
@@ -73,14 +81,13 @@ namespace Game15Server
 
             if (startGame.Ok == true)
             {
-                
                 startAsServerButton.gameObject.SetActive(false);
                 getIntoClientScene.gameObject.SetActive(false);
                 Debug.Log($"Server Result {startGame.Ok} ");
             }
             else
             {
-                Debug.LogError($"Server Result {startGame.Ok} :\n Game args {startGameArgs}");
+                Debug.LogError($"Server Result {startGame.ShutdownReason} :\n Game args {startGameArgs}");
             }
 
         }

@@ -16,44 +16,17 @@ using UnityEngine;
 public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 {
 
-    // [SerializeField] private Camera _camera;
 
+    Vector2 _move;
 
-    private Vector2 moveDirection;
-    private Vector2 joyStick;
     
-    private float cameraYrotation;
 
-    private bool jumpButton;
-    private bool upArrowButton;
-    private bool downArrowButton;
-
-
-
-    /// <summary>
-    /// INetwork input to store the inputs from the user on the server side.
-    /// </summary>
-    // PlayerInputStruct _cachedInput = new PlayerInputStruct();
 
     #region Monobehaviour callbacks
     private void Awake()
     {
-
-    }
-
-    private void OnEnable()
-    {
-
         
     }
-
-    private void OnDisable()
-    {
-
-        
-    }
-
-    
 
     // Start is called before the first frame update
     void Start()
@@ -61,13 +34,11 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
-
+        _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
+
 
     #endregion
 
@@ -79,14 +50,22 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     }
     #endregion
 
-    #region Private methods
-
-    #endregion
-
     #region INetworkRunner Used Callbacks
-
-
     public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        InputStorage _inputStorage = new InputStorage();
+        
+        _inputStorage.move = _move;
+
+        input.Set(_inputStorage);
+        // Debug.Log($"{nameof(OnInput)} \t server move {_inputStorage.move} \t Local move {_move} ");
+    }
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
 
     }
@@ -165,14 +144,6 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
         Debug.Log($"{nameof(OnSceneLoadStart)}");
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-
-    }
-
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-
-    }
+    
     #endregion
 }

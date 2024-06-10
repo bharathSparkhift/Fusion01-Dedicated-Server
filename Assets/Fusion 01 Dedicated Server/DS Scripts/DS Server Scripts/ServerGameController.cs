@@ -22,13 +22,12 @@ namespace Game15Server
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
         {
             Quaternion rotation = Quaternion.Euler(0, 180f, 0); 
+
             NetworkObject Player = runner.Spawn(player, Vector3.zero, rotation, inputAuthority: playerRef);
             runner.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             
             _playerMap[playerRef] = Player;
             Runner.SetPlayerObject(playerRef, Player);
-            Debug.Log($"{nameof(OnPlayerJoined)} \t Player {Player} \t PlayerRef {playerRef} ");
-
         }
 
         #region Monobehaviour callbacks

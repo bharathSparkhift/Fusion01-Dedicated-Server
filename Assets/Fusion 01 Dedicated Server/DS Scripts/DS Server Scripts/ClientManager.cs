@@ -83,7 +83,7 @@ namespace Game15Server
 
         public void StartClientRunner()
         {
-            _instanceRunner = GetRunner("Client Network Runner");
+            _instanceRunner = GetRunner("[client network runner]");
             Debug.Log($"{nameof(StartClientRunner)}");
         }
 

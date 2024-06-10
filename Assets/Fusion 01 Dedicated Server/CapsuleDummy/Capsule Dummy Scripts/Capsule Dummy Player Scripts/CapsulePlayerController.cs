@@ -3,6 +3,7 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class CapsulePlayerController : NetworkBehaviour
 {
@@ -45,27 +46,15 @@ public class CapsulePlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        // Fetch the details form the INetworkInput.
-        /*if (GetInput(out PlayerInputStruct input_)) 
+
+        if (GetInput(out InputStorage inputStorageOut))
         {
-            // _animMoveValue = input_.JoystickVec2;
-
-            if (input_.MoveDirection != Vector2.zero)
-            {
-                Vector3 direction = (transform.forward * input_.MoveDirection.y + transform.right * input_.MoveDirection.x) * 0.11f;
-                // direction = transform.position + (transform.forward * 0.2f);
-                direction += transform.position;
-                rb.Move(direction, Quaternion.Euler(0,270f,0));
-
-            }
-
-            // Player rotation accordance with the Main camera rotation.
-            *//*transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, transform.eulerAngles.y - 90f, 0),
-                                                    Quaternion.Euler(0, input_.CameraYrotation, 0),
-                                                    Runner.DeltaTime * 10);*//*
-
-
-        }*/
+            Vector3 direction = (transform.forward * inputStorageOut.move.y + transform.right * inputStorageOut.move.x) * Runner.DeltaTime * speed;
+            direction += transform.position;
+            rb.MovePosition(direction);
+            // Debug.Log($"{nameof(CapsulePlayerController)} \t move  {inputStorageOut.move}");
+        }
+        
     }
     #endregion
 }
