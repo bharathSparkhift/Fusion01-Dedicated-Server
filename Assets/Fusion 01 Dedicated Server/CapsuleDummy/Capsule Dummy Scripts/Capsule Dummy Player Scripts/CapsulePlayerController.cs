@@ -3,6 +3,7 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.Windows;
 
 public class CapsulePlayerController : NetworkBehaviour
@@ -12,8 +13,10 @@ public class CapsulePlayerController : NetworkBehaviour
     // [SerializeField] CinemachineVirtualCamera tppVirtualCamera;
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
+    [SerializeField] LayerMask layerMask;
 
 
+    private readonly List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
     bool _cameraAssignedToPlayer;
 
 
@@ -46,7 +49,7 @@ public class CapsulePlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-
+        DetectObstacles();
         if (GetInput(out InputStorage inputStorageOut))
         {
             Vector3 direction = (transform.forward * inputStorageOut.move.y + transform.right * inputStorageOut.move.x) * Runner.DeltaTime * speed;
@@ -55,6 +58,20 @@ public class CapsulePlayerController : NetworkBehaviour
             // Debug.Log($"{nameof(CapsulePlayerController)} \t move  {inputStorageOut.move}");
         }
         
+        
     }
     #endregion
+
+
+    void DetectObstacles()
+    {
+        // Runner.LagCompensation.OverlapBox(Vector3.zero, new Vector3(), transform.rotation, player : Object.HasInputAuthority, hits, layerMask, HitOptions.SubtickAccuracy, true);
+        int hitOut = Runner.LagCompensation.OverlapSphere(transform.position, 0.88f, player: Object.InputAuthority, hits, options: HitOptions.SubtickAccuracy);
+        foreach(var hit in hits)
+        {
+            // hit.GameObject.layer == layerMask.value;
+            Debug.Log($"Hit layer {hit.GameObject.layer}");
+        }
+        
+    }
 }
