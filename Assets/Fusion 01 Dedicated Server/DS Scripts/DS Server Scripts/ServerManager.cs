@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 namespace Game15Server
 {
@@ -24,36 +25,23 @@ namespace Game15Server
         }
 
         #region Serialize Private Fields
-        
         [SerializeField] private NetworkRunner  serverRunner;
         [SerializeField] private TMP_InputField sessionName;
         [SerializeField] private TMP_InputField portNumber;
         [SerializeField] private TMP_InputField playerCount;
+        [SerializeField] private Button         startAsServerButton;
+        [SerializeField] private Button         getIntoClientScene;
+        [SerializeField] private TMP_Dropdown   serverRegion;
         #endregion
 
-        #region Private Fields
-        /// <summary>
-        /// Session properties
-        /// </summary>
-        public Dictionary<string, SessionProperty> SessionProperties { get; private set; } = new Dictionary<string, SessionProperty>();
-        #endregion
 
-        #region Public fields
-
-        public Region region;
+        #region private fields
+        Region region;
         #endregion
 
 
         #region Monobehaviour callbacks
-        // Start is called before the first frame update
-        async void Start()
-        {
-            // sStartServer();
-#if !UNITY_SERVER
-            // SceneManager.LoadScene(1, LoadSceneMode.Single);
-#endif
-
-        }
+       
 #endregion
 
         /// <summary>
@@ -65,7 +53,7 @@ namespace Game15Server
 
             var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
 
-            appSettings.FixedRegion = region.ToString().ToLower();  // Region.asia.ToString().ToLower();
+            appSettings.FixedRegion = region.ToString().ToLower(); 
 
             StartGameArgs startGameArgs = new StartGameArgs()
             {
@@ -85,16 +73,46 @@ namespace Game15Server
 
             if (startGame.Ok == true)
             {
-                Debug.Log($"Result {startGame.Ok} :\n Game args {startGameArgs}");
+                
+                startAsServerButton.gameObject.SetActive(false);
+                getIntoClientScene.gameObject.SetActive(false);
+                Debug.Log($"Server Result {startGame.Ok} ");
             }
             else
             {
-                Debug.LogError($"Result {startGame.Ok} :\n Game args {startGameArgs}");
+                Debug.LogError($"Server Result {startGame.Ok} :\n Game args {startGameArgs}");
             }
-#if UNITY_SERVER
 
-            
-#endif
+        }
+
+        /// <summary>
+        /// Get into the client scene
+        /// </summary>
+        public void GetIntoClientScene()
+        {
+            SceneManager.LoadSceneAsync(1);
+        }
+
+        /// <summary>
+        /// Drop down OnValue Changed()
+        /// </summary>
+        /// <param name="value"></param>
+        public void RegionOnValueChanged(int value)
+        {
+
+            switch (value) { 
+                case 0:
+                    region = Region.asia;
+                    break;
+                case 1:
+                    region = Region.kr;
+                    break;
+                case 2:
+                    region = Region.us;
+                    break;
+            }
+
+            Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {region}");
         }
 
 
