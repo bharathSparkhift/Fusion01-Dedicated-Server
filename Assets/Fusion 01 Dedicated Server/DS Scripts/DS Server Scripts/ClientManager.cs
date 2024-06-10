@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 using static Game15Server.ServerManager;
 
 namespace Game15Server
@@ -26,7 +27,7 @@ namespace Game15Server
         /// <summary>
         /// Session name.
         /// </summary>
-        [SerializeField] private string _sessionName = "s";
+        [SerializeField] private TMP_InputField sessionName;
         #endregion
 
 
@@ -42,7 +43,7 @@ namespace Game15Server
         // Start is called before the first frame update
         void Start()
         {
-            
+            StartClientRunner();
         }
 
         private void OnEnable()
@@ -79,15 +80,37 @@ namespace Game15Server
         public Region _Region;
         #endregion
 
+
+        public void StartClientRunner()
+        {
+            _instanceRunner = GetRunner("Client");
+            Debug.Log($"{nameof(StartClientRunner)}");
+        }
+
+        public void NewSessionDetails()
+        {
+            Debug.Log($"{nameof(NewSessionDetails)} Session Available");
+            List<SessionInfo> sessionList = new List<SessionInfo>();
+            foreach (SessionInfo sessionInfo in sessionList)
+            {
+                Debug.Log($"Is visible {sessionInfo.IsVisible}");
+                Debug.Log($"Is visible {sessionInfo.Name}");
+                Debug.Log($"Is visible {sessionInfo.PlayerCount}");
+                Debug.Log($"Is visible {sessionInfo.Region}");
+                Debug.Log($"Is visible {sessionInfo.MaxPlayers}");
+            }
+            
+        }
+
         #region Public methods
         /// <summary>
         /// Start the client on button click.
         /// </summary>
         public async void StartClient()
         {
-            _instanceRunner = GetRunner("Client");
+            // _instanceRunner = GetRunner("Client");
 
-            var result = await StartSimulation(_instanceRunner, GameMode.Client, _sessionName);
+            var result = await StartSimulation(_instanceRunner, GameMode.Client, sessionName.text.Trim());
             Debug.Log($"--------------- {nameof(ClientManager)}  Result {result.Ok} ------------------");
             if (result.Ok == false)
             {
@@ -123,6 +146,8 @@ namespace Game15Server
                 DisableClientSessionCreation = true,
                 
             });
+
+            
         }
         #endregion
 
@@ -194,7 +219,7 @@ namespace Game15Server
 
         public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
         {
-            Debug.Log($"{nameof(ClientManager)} Session Available");
+            
             foreach (SessionInfo sessionInfo in sessionList)
             {
                 Debug.Log($"Is visible {sessionInfo.IsVisible}");
@@ -203,7 +228,7 @@ namespace Game15Server
                 Debug.Log($"Is visible {sessionInfo.Region}");
                 Debug.Log($"Is visible {sessionInfo.MaxPlayers}");
             }
-            Debug.Log($"{nameof(OnSessionListUpdated)}");
+            Debug.Log($"{nameof(OnSessionListUpdated)} Session Available");
         }
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)

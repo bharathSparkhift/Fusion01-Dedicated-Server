@@ -12,7 +12,7 @@ namespace Game15Server
     /// <summary>
     /// Server game controller for instantiating the player by the server.
     /// </summary>
-    public class ServerGameController : SimulationBehaviour, IPlayerJoined, IPlayerLeft, INetworkRunnerCallbacks
+    public class ServerGameController : SimulationBehaviour, INetworkRunnerCallbacks
     {
         
         [SerializeField] private NetworkObject player;
@@ -66,24 +66,16 @@ namespace Game15Server
 
         }
 
-        public void PlayerJoined(PlayerRef player)
-        {
-            Debug.Log($"{nameof(PlayerJoined)}");
-        }
-
-        public void PlayerLeft(PlayerRef player)
-        {
-            Debug.Log($"{nameof(PlayerLeft)}");
-        }
+     
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            Debug.Log($"{nameof(OnInput)}");
+
         }
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
         {
-            Debug.Log($"{nameof(OnInputMissing)}");
+            // Debug.Log($"{nameof(OnInputMissing)}");
         }
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)

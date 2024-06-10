@@ -48,9 +48,9 @@ namespace Game15Server
         // Start is called before the first frame update
         async void Start()
         {
-            StartServer();
+            // sStartServer();
 #if !UNITY_SERVER
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            // SceneManager.LoadScene(1, LoadSceneMode.Single);
 #endif
 
         }
@@ -61,10 +61,7 @@ namespace Game15Server
         /// </summary>
         public async void StartServer()
         {
-
-#if UNITY_SERVER
-
-            serverRunner.name = "<color=red>server</color>";
+            serverRunner.name = $"server {sessionName.text.Trim()}";
 
             var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
 
@@ -94,6 +91,9 @@ namespace Game15Server
             {
                 Debug.LogError($"Result {startGame.Ok} :\n Game args {startGameArgs}");
             }
+#if UNITY_SERVER
+
+            
 #endif
         }
 
