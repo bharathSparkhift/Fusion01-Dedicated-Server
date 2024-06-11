@@ -17,6 +17,9 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 {
 
 
+    [field: SerializeField] public TouchPad _touchPad { get; private set; }
+    [SerializeField] private Camera _camera;
+
     Vector2 _move;
 
     
@@ -45,7 +48,11 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     #region Networkbehaviour callbacks
     public override void Render()
     {
+        if (_touchPad != null)
+            return;
 
+        _touchPad = GameObject.FindObjectOfType<TouchPad>();
+        _camera = GameObject.FindObjectOfType<Camera>();
 
     }
     #endregion
@@ -54,11 +61,15 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         InputStorage _inputStorage = new InputStorage();
-        
-        _inputStorage.move = _move;
+        _inputStorage.Move = _move;
 
+        // Check for camera
+        if (_camera != null)
+        {
+            // Camera Y rotation angle
+            _inputStorage.CameraYrotation = _camera.transform.localEulerAngles.y;
+        }
         input.Set(_inputStorage);
-        // Debug.Log($"{nameof(OnInput)} \t server move {_inputStorage.move} \t Local move {_move} ");
     }
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {

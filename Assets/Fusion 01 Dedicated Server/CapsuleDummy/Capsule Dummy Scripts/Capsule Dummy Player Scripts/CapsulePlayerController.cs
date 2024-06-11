@@ -1,4 +1,5 @@
 // using Fusion;
+using Cinemachine;
 using Fusion;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,69 +10,79 @@ using UnityEngine.Windows;
 public class CapsulePlayerController : NetworkBehaviour
 {
 
-
-    // [SerializeField] CinemachineVirtualCamera tppVirtualCamera;
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
-    [SerializeField] LayerMask layerMask;
 
+    [SerializeField] LayerMask layerMask;
+    [SerializeField] HitboxRoot hitboxRoot;
 
     private readonly List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
     bool _cameraAssignedToPlayer;
 
+    public CinemachineVirtualCamera _tppVirtualCamera;
+    public Transform _mainCamera;
+
 
     #region Monobehaviour callbacks
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     #endregion
 
     #region NetworkRunnercallbacks
     public override void Render()
     {
-        if (!_cameraAssignedToPlayer)
+        if (!_cameraAssignedToPlayer && Object.HasInputAuthority)
         {
-            /*tppVirtualCamera = GameObject.FindGameObjectWithTag("TPP Camera").GetComponent<CinemachineVirtualCamera>();
-            tppVirtualCamera.Follow = this.transform;*/
+            _tppVirtualCamera = GameObject.FindGameObjectWithTag("TPP Camera").GetComponent<CinemachineVirtualCamera>();
+            _tppVirtualCamera.Follow = this.transform;
+            _mainCamera = Camera.main.transform;
+            FirstPersonCamera.Instance.Target = this.transform;
+
+            Debug.Log("Camera assigned to player.........");
             _cameraAssignedToPlayer = true;
         }
-        
+
     }
 
 
     public override void FixedUpdateNetwork()
     {
-        DetectObstacles();
+        // DetectObstacles();
         if (GetInput(out InputStorage inputStorageOut))
         {
-            Vector3 direction = (transform.forward * inputStorageOut.move.y + transform.right * inputStorageOut.move.x) * Runner.DeltaTime * speed;
+            Vector3 direction = (transform.forward * inputStorageOut.Move.y + transform.right * inputStorageOut.Move.x) * Runner.DeltaTime * speed;
             direction += transform.position;
             rb.MovePosition(direction);
-            // Debug.Log($"{nameof(CapsulePlayerController)} \t move  {inputStorageOut.move}");
+
+            transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, transform.eulerAngles.y, 0),
+                                                    Quaternion.Euler(0, inputStorageOut.CameraYrotation, 0),
+                                                    Runner.DeltaTime * 30f);
         }
-        
-        
     }
     #endregion
 
 
     void DetectObstacles()
     {
-        // Runner.LagCompensation.OverlapBox(Vector3.zero, new Vector3(), transform.rotation, player : Object.HasInputAuthority, hits, layerMask, HitOptions.SubtickAccuracy, true);
-        int hitOut = Runner.LagCompensation.OverlapSphere(transform.position, 0.88f, player: Object.InputAuthority, hits, options: HitOptions.SubtickAccuracy);
-        foreach(var hit in hits)
+        // Clear the hits list before each check
+        hits.Clear();
+
+        // Perform lag-compensated sphere overlap query
+        int hitCount = Runner.LagCompensation.OverlapSphere(transform.position, 1.1f, Object.InputAuthority, hits, layerMask, HitOptions.SubtickAccuracy);
+
+        // Check if any of the hits belong to the ground layer
+        foreach (var hit in hits)
         {
-            // hit.GameObject.layer == layerMask.value;
-            Debug.Log($"Hit layer {hit.GameObject.layer}");
+            Debug.Log(hit.GameObject.name);
+            if (hit.GameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Debug.Log("Player is grounded.");
+                return;
+            }
         }
-        
+
     }
 }

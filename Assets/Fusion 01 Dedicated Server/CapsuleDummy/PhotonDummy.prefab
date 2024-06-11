@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3705864018094474893}
   - component: {fileID: 4460997674165850329}
   - component: {fileID: 5589067382660599398}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: -6284150530440827758}
   - component: {fileID: 2190285911731371142}
   - component: {fileID: 2230173614190195977}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: PhotonDummy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 843067535118072890}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.1, z: 0}
+  m_LocalPosition: {x: -0, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -124,6 +124,7 @@ Transform:
   - {fileID: 3705864018094474893}
   - {fileID: 5614591165205846285}
   - {fileID: 7109199513948672604}
+  - {fileID: 1934095143973845992}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3987698107295934757
@@ -298,11 +299,12 @@ MonoBehaviour:
   WordCount: 0
   _interpolationDataSource: 2
   Config: 1
-  BroadRadius: 1
+  BroadRadius: 1.1
   Offset: {x: 0, y: 0, z: 0}
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:
   - {fileID: 8370894917674096957}
+  - {fileID: 2179112721945762886}
 --- !u!114 &2230173614190195977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +324,10 @@ MonoBehaviour:
   speed: 5
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  hitboxRoot: {fileID: 2190285911731371142}
+  _tppVirtualCamera: {fileID: 0}
+  _mainCamera: {fileID: 0}
 --- !u!1 &2577568180644519385
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2267792696792675226}
   - component: {fileID: 8370894917674096957}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Interpolation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
-  SphereRadius: 1
+  SphereRadius: 1.1
   BoxExtents: {x: 0.4, y: 0.9, z: 0.4}
   Offset: {x: 0, y: 0, z: 0}
   Root: {fileID: 2190285911731371142}
@@ -384,7 +389,7 @@ GameObject:
   - component: {fileID: 5614591165205846285}
   - component: {fileID: 8065659436447226649}
   - component: {fileID: 322655847656307868}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,6 +461,56 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5924844277660329414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934095143973845992}
+  - component: {fileID: 2179112721945762886}
+  m_Layer: 7
+  m_Name: Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1934095143973845992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924844277660329414}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 70084899499943552}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2179112721945762886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924844277660329414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
+  SphereRadius: 0
+  BoxExtents: {x: 1, y: 0.1, z: 1}
+  Offset: {x: 0, y: 0, z: 0}
+  Root: {fileID: 2190285911731371142}
+  GizmosColor: {r: 1, g: 0.16159374, b: 0, a: 1}
 --- !u!1001 &7287468750561293751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,7 +585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 759098c79db7ee147beab307a024beef, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

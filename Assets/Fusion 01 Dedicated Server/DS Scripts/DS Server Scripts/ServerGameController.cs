@@ -23,7 +23,7 @@ namespace Game15Server
         {
             Quaternion rotation = Quaternion.Euler(0, 180f, 0); 
 
-            NetworkObject Player = runner.Spawn(player, Vector3.zero, rotation, inputAuthority: playerRef);
+            NetworkObject Player = runner.Spawn(player, new Vector3(0,10,0), rotation, inputAuthority: playerRef);
             runner.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             
             _playerMap[playerRef] = Player;
@@ -31,7 +31,6 @@ namespace Game15Server
         }
 
         #region Monobehaviour callbacks
-        // Start is called before the first frame update
         void Start()
         {
 

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public struct InputStorage : INetworkInput
 {
-    public Vector2 move;
+    public Vector2 Move;
+    public float CameraYrotation;
 
 }
