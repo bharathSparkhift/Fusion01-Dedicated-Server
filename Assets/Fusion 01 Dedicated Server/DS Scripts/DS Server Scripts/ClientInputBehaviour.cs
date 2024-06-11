@@ -78,7 +78,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        //Destroy(player.);
+
         Debug.Log($"{nameof(ClientInputBehaviour)} \t {nameof(OnPlayerLeft)}");
     }
 
