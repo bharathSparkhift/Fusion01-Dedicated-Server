@@ -53,6 +53,9 @@ namespace Game15Server
                 // Remove player from mapping
                 _playerMap.Remove(player);
 
+                // Destroy the Networkobject.
+                Destroy(character);
+
                 Log.Info($"Despawn for Player: {player}");
             }
 

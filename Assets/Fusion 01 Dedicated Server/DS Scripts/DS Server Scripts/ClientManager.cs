@@ -16,7 +16,7 @@ namespace Game15Server
     /// <summary>
     /// Client manager script to instantiate the clients on the network.
     /// </summary>
-    public class ClientManager : MonoBehaviour
+    public class ClientManager : SimulationBehaviour
     {
 
         #region Serialize private fields
@@ -177,6 +177,8 @@ namespace Game15Server
 
             Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {_region}");
         }
+
+        
         #endregion
 
     }

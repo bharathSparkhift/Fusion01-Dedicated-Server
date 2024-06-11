@@ -29,6 +29,16 @@ public class CapsulePlayerController : NetworkBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        UiHandler.OnUiHandler += DestroyPlayerOnLeft;
+    }
+
+    private void OnDisable()
+    {
+        UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
+    }
+
     #endregion
 
     #region NetworkRunnercallbacks
@@ -85,4 +95,10 @@ public class CapsulePlayerController : NetworkBehaviour
         }
 
     }
+
+    void DestroyPlayerOnLeft()
+    {
+        Destroy(this.gameObject);
+        Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
+    } 
 }
