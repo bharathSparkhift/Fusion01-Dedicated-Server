@@ -1,26 +1,30 @@
 // using Fusion;
 using Cinemachine;
 using Fusion;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
 
-public class CapsulePlayerController : NetworkBehaviour
+public class CapsulePlayerController : CharacterControlManager
 {
 
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
+    [SerializeField] bool _jumping;
 
     [SerializeField] LayerMask layerMask;
     [SerializeField] HitboxRoot hitboxRoot;
 
     private readonly List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
     bool _cameraAssignedToPlayer;
+    
 
     public CinemachineVirtualCamera _tppVirtualCamera;
     public Transform _mainCamera;
+
 
 
     #region Monobehaviour callbacks
@@ -38,6 +42,8 @@ public class CapsulePlayerController : NetworkBehaviour
     {
         UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
     }
+
+  
 
     #endregion
 
@@ -63,18 +69,46 @@ public class CapsulePlayerController : NetworkBehaviour
         // DetectObstacles();
         if (GetInput(out InputStorage inputStorageOut))
         {
-            Vector3 direction = (transform.forward * inputStorageOut.Move.y + transform.right * inputStorageOut.Move.x) * Runner.DeltaTime * speed;
-            direction += transform.position;
-            rb.MovePosition(direction);
-
-            transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, transform.eulerAngles.y, 0),
-                                                    Quaternion.Euler(0, inputStorageOut.CameraYrotation, 0),
-                                                    Runner.DeltaTime * 30f);
+            Move(inputStorageOut);  
+            Jump(inputStorageOut);
         }
     }
     #endregion
 
+    #region Base class methods
+    public override void Move(InputStorage inputStorageOut)
+    {
+        Vector3 direction = (transform.forward * inputStorageOut.Move.y + transform.right * inputStorageOut.Move.x) * Runner.DeltaTime * speed;
+        direction += transform.position;
+        // direction.Normalize();
+        rb.MovePosition(direction);
 
+        transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, transform.eulerAngles.y, 0),
+                                                Quaternion.Euler(0, inputStorageOut.CameraYrotation, 0),
+                                                Runner.DeltaTime * 30f);
+    }
+
+    public override void Jump(InputStorage inputStorageOut)
+    {
+        if (inputStorageOut.PlayerButtons.IsSet(PlayerInputButtons.Jump) && !_jumping)
+        {
+            
+            rb.AddForce(transform.up * 3f, ForceMode.VelocityChange);
+            _jumping = true;
+            
+            Invoke(nameof(ResetJumping), 1f);
+            Debug.Log($"Jump is pressed.");
+        }
+            
+    }
+    #endregion
+
+    #region Private methods
+    void ResetJumping()
+    {
+        _jumping = false;
+        Debug.Log(nameof(ResetJumping));
+    }
     void DetectObstacles()
     {
         // Clear the hits list before each check
@@ -100,5 +134,6 @@ public class CapsulePlayerController : NetworkBehaviour
     {
         Destroy(this.gameObject);
         Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
-    } 
+    }
+    #endregion
 }

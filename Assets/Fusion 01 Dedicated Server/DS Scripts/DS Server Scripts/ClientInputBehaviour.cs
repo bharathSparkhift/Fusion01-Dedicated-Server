@@ -21,6 +21,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private Camera _camera;
 
     Vector2 _move;
+    bool _jump;
 
     
 
@@ -40,6 +41,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     void Update()
     {
         _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        _jump = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J);
     }
 
 
@@ -62,6 +64,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     {
         InputStorage _inputStorage = new InputStorage();
         _inputStorage.Move = _move;
+        _inputStorage.PlayerButtons.Set(PlayerInputButtons.Jump, _jump);
 
         // Check for camera
         if (_camera != null)
