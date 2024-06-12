@@ -20,17 +20,27 @@ public class CapsulePlayerController : CharacterControlManager
 
     private readonly List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
     bool _cameraAssignedToPlayer;
-    
+    GameSceneManager _gameSceneManager;
 
     public CinemachineVirtualCamera _tppVirtualCamera;
     public Transform _mainCamera;
 
+    
+
 
 
     #region Monobehaviour callbacks
+
+    private void Awake()
+    {
+        _gameSceneManager = new GameSceneManager();
+    }
+
     void Start()
     {
-        
+        // _gameSceneManager.AddPlayersToDictionary(Object.Id.ToString(), transform);
+        // _gameSceneManager.AddPlayerNetworkObjectIdToArrayList(Object.Id.ToString());
+        Debug.Log($"Object Id {Object.Id.ToString()}");
     }
 
     private void OnEnable()
@@ -41,6 +51,7 @@ public class CapsulePlayerController : CharacterControlManager
     private void OnDisable()
     {
         UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
+   
     }
 
   
@@ -132,7 +143,8 @@ public class CapsulePlayerController : CharacterControlManager
 
     void DestroyPlayerOnLeft()
     {
-        Destroy(this.gameObject);
+        // Destroy(this.gameObject);
+        _gameSceneManager.RemovePlayersFromDictionary(Object.Id.ToString());
         Runner.Shutdown();
         Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
     }

@@ -21,13 +21,24 @@ namespace Game15Server
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef playerRef)
         {
-            Quaternion rotation = Quaternion.Euler(0, 180f, 0); 
+            try
+            {
+                Quaternion rotation = Quaternion.Euler(0, 180f, 0);
 
-            NetworkObject Player = runner.Spawn(player, new Vector3(0,10,0), rotation, inputAuthority: playerRef);
-            runner.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                NetworkObject Player = runner.Spawn(player, new Vector3(0, 10, 0), rotation, inputAuthority: playerRef);
+                runner.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+
+                _playerMap[playerRef] = Player;
+                foreach (KeyValuePair<PlayerRef, NetworkObject> keyValuePair in _playerMap)
+                {
+                    Debug.Log($"Player Ref \t {keyValuePair.Key} Player Networkobject {keyValuePair.Value}");
+                }
+                Runner.SetPlayerObject(playerRef, Player);
+            } catch (Exception e)
+            {
+                Debug.Log(e.Message);
+            }
             
-            _playerMap[playerRef] = Player;
-            Runner.SetPlayerObject(playerRef, Player);
         }
 
         #region Monobehaviour callbacks
@@ -45,25 +56,33 @@ namespace Game15Server
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
-            if (_playerMap.TryGetValue(player, out var character))
+            try
             {
-                // Despawn Player
-                runner.Despawn(character);
+                if (_playerMap.TryGetValue(player, out var character))
+                {
+                    // Despawn Player
+                    runner.Despawn(character);
 
-                // Remove player from mapping
-                _playerMap.Remove(player);
+                    // Remove player from mapping
+                    _playerMap.Remove(player);
 
-                // Destroy the Networkobject.
-                Destroy(character);
+                    // Destroy the Networkobject.
+                    Destroy(character);
 
-                Log.Info($"Despawn for Player: {player}");
+                    Log.Info($"Despawn for Player: {player}");
+                }
+
+                if (_playerMap.Count == 0)
+                {
+                    Log.Info("Last player left, shutdown...");
+                }
+                Debug.Log($"{nameof(OnPlayerLeft)} ");
             }
-
-            if (_playerMap.Count == 0)
+            catch (Exception e)
             {
-                Log.Info("Last player left, shutdown...");
+                Debug.Log(e.Message);
             }
-            Debug.Log($"{nameof(OnPlayerLeft)} ");
+            
 
         }
 

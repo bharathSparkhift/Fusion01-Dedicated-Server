@@ -22,14 +22,15 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
     Vector2 _move;
     bool _jump;
+    GameSceneManager _gameSceneManager;
 
-    
+
 
 
     #region Monobehaviour callbacks
     private void Awake()
     {
-        
+        _gameSceneManager = new GameSceneManager();
     }
 
     // Start is called before the first frame update
@@ -76,7 +77,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     }
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-
+        // _gameSceneManager.AddPlayersToDictionary(player.PlayerId, )
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
