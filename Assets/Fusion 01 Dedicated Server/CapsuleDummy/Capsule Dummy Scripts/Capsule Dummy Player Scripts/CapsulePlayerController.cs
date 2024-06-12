@@ -133,6 +133,7 @@ public class CapsulePlayerController : CharacterControlManager
     void DestroyPlayerOnLeft()
     {
         Destroy(this.gameObject);
+        Runner.Shutdown();
         Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
     }
     #endregion
