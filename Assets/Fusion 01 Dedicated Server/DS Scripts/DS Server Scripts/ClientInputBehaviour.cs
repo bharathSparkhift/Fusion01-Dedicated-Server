@@ -22,6 +22,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
     Vector2 _move;
     bool _jump;
+    bool _weaponCollect;
     GameSceneManager _gameSceneManager;
 
 
@@ -42,7 +43,8 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     void Update()
     {
         _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        _jump = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J);
+        _jump = Input.GetKeyDown(KeyCode.Space); // || Input.GetKeyDown(KeyCode.J);
+        _weaponCollect = Input.GetKeyDown(KeyCode.C); // || Input.GetKeyDown(KeyCode.J);
     }
 
 
@@ -65,6 +67,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     {
         InputStorage _inputStorage = new InputStorage();
         _inputStorage.Move = _move;
+        _inputStorage.PlayerButtons.Set(PlayerInputButtons.Jump, _jump);
         _inputStorage.PlayerButtons.Set(PlayerInputButtons.Jump, _jump);
 
         // Check for camera

@@ -5,7 +5,8 @@ using UnityEngine;
 
 enum PlayerInputButtons
 {
-    Jump
+    Jump,
+    WeaponCollect,
 }
 
 public struct InputStorage : INetworkInput

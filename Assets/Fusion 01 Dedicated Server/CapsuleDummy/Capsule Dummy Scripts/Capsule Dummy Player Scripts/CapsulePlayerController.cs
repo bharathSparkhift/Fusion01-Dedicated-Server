@@ -10,13 +10,14 @@ using UnityEngine.Windows;
 
 public class CapsulePlayerController : CharacterControlManager
 {
-
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] bool _jumping;
 
     [SerializeField] LayerMask layerMask;
     [SerializeField] HitboxRoot hitboxRoot;
+
+    [SerializeField] Transform weapon2Position;
 
     private readonly List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
     bool _cameraAssignedToPlayer;
@@ -51,7 +52,6 @@ public class CapsulePlayerController : CharacterControlManager
     private void OnDisable()
     {
         UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
-   
     }
 
   
@@ -67,7 +67,6 @@ public class CapsulePlayerController : CharacterControlManager
             _tppVirtualCamera.Follow = this.transform;
             _mainCamera = Camera.main.transform;
             FirstPersonCamera.Instance.Target = this.transform;
-
             Debug.Log("Camera assigned to player.........");
             _cameraAssignedToPlayer = true;
         }
@@ -147,6 +146,13 @@ public class CapsulePlayerController : CharacterControlManager
         _gameSceneManager.RemovePlayersFromDictionary(Object.Id.ToString());
         Runner.Shutdown();
         Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
+    }
+    #endregion
+
+    #region public methods
+    public void CollectWeapon()
+    {
+
     }
     #endregion
 }
