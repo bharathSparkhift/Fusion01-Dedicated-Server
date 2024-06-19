@@ -94,7 +94,7 @@ namespace LegacyLoot_API
             ServerGameController serverGameController = FindObjectOfType<ServerGameController>();
             if (serverGameController == null)
                 return;
-            TaskStatus taskStatus = await serverGameController.ShutDownServer();
+            serverGameController.ShutDownServer();
             serverManager.ToggleButtons(true);
             StartCoroutine(DeleteRoomWithUnityWebRequest(DeleteRoomEndPoint));
 

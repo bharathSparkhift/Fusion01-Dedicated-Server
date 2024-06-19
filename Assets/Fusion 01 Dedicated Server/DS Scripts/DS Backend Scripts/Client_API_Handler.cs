@@ -51,6 +51,19 @@ namespace LegacyLoot_API {
             StartCoroutine(GetListOfRoomOnClientStart(GetRoomEndPoints));
         }
 
+
+        private void OnApplicationFocus(bool focus)
+        {
+            StartCoroutine(GetListOfRoomOnClientStart(GetRoomEndPoints));
+            Debug.Log($"<color=blue>{nameof(OnApplicationFocus)} \t focus {focus}</color>");
+        }
+
+        private void OnApplicationPause(bool pause)
+        {
+            Debug.Log($"<color=blue>{nameof(OnApplicationPause)}</color>");
+        }
+
+
         IEnumerator GetListOfRoomOnClientStart(string uri)
         {
             UnityWebRequest webRequest = new UnityWebRequest(uri, "GET");

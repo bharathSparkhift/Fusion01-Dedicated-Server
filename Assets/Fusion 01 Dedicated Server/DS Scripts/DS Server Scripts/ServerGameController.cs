@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 
 
@@ -46,13 +47,11 @@ namespace Game15Server
 
 
         #region Public methods
-        public async Task<TaskStatus> ShutDownServer()
+        public async void ShutDownServer()
         {
-            Task result = Runner.Shutdown();
-            await result.ConfigureAwait(true);
-
-            Debug.Log($"<color=red>{nameof(ServerGameController)} \t {nameof(ShutDownServer)} \t {result.Status.ToString()}</color>");
-            return result.Status;
+            await Runner.Shutdown();
+            Debug.Log($"<color=red>{nameof(ServerGameController)} \t {nameof(ShutDownServer)}</color>");
+            return;
         }
         #endregion
 
@@ -87,8 +86,9 @@ namespace Game15Server
 
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
         {
-           
+            SceneManager.UnloadSceneAsync(2);
             Debug.Log($"<color=red>{nameof(ServerGameController)} \t {nameof(OnShutdown)}</color>");
+
         }
 
         public void OnConnectedToServer(NetworkRunner runner)
@@ -99,6 +99,7 @@ namespace Game15Server
         public void OnDisconnectedFromServer(NetworkRunner runner)
         {
             Debug.Log($"<color=red>{nameof(ServerGameController)} \t {nameof(OnDisconnectedFromServer)}</color>");
+            
         }
 
         public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)

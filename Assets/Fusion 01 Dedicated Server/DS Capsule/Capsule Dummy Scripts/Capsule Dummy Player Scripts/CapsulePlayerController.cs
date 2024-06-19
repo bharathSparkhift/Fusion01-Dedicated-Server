@@ -7,6 +7,11 @@ using UnityEngine;
 
 public class CapsulePlayerController : CharacterControlManager
 {
+
+    public delegate void CapsulePlayerControllerDelegate(int index);
+    public CapsulePlayerControllerDelegate OnCapsulePlayerChanged;
+
+
     #region Serialize private fields
     [SerializeField] Rigidbody rb;
     [SerializeField] float moveSpeed;
@@ -16,7 +21,6 @@ public class CapsulePlayerController : CharacterControlManager
     [SerializeField] bool onGround = false;
     [SerializeField] float rayLength = 1f;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] HitboxRoot hitboxRoot;
     [SerializeField] Transform weapon2Position;
     #endregion
 

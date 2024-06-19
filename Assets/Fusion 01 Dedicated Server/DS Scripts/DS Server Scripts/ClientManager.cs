@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using LegacyLoot_API;
-
+using Unity.VisualScripting;
 
 namespace LegacyLoot
 {
@@ -80,6 +80,10 @@ namespace LegacyLoot
             }
         }
 
+        
+
+        
+
         #endregion
 
         #region Private fields
@@ -104,6 +108,10 @@ namespace LegacyLoot
 
         public IEnumerator UpdateUi(int index, GameRoom gameRoom)
         {
+            foreach(var client in clientIndividualSessionUis)
+            {
+                client.gameObject.SetActive(false);
+            }
             yield return new WaitForSeconds(clientIndividualSessionUiDisplayDelay); 
             clientIndividualSessionUis[index].UpdateDetails(gameRoom);
             clientIndividualSessionUis[index].gameObject.SetActive(true);
@@ -125,20 +133,7 @@ namespace LegacyLoot
             StartClient(index, gameRoom);
         }
 
-        /*public void NewSessionDetails()
-        {
-            Debug.Log($"{nameof(NewSessionDetails)} Session Available");
-            List<SessionInfo> sessionList = new List<SessionInfo>();
-            foreach (SessionInfo sessionInfo in sessionList)
-            {
-                Debug.Log($"Is visible {sessionInfo.IsVisible}");
-                Debug.Log($"Is visible {sessionInfo.Name}");
-                Debug.Log($"Is visible {sessionInfo.PlayerCount}");
-                Debug.Log($"Is visible {sessionInfo.Region}");
-                Debug.Log($"Is visible {sessionInfo.MaxPlayers}");
-            }
-            
-        }*/
+       
 
         #region Public methods
         /// <summary>
@@ -232,7 +227,10 @@ namespace LegacyLoot
 
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {
-            
+
+            Debug.Log($"{nameof(ClientManager)} \t {nameof(OnPlayerLeft)}");
+            // Load the client scene.
+            SceneManager.LoadSceneAsync(1);
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)

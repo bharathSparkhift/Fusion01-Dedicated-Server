@@ -9,6 +9,7 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using LegacyLoot_API;
+using System.Threading.Tasks;
 
 namespace LegacyLoot
 {
@@ -27,6 +28,8 @@ namespace LegacyLoot
 
         #region Serialize Private Fields
         [SerializeField] private NetworkRunner  serverRunner;
+        
+
         [SerializeField] private TMP_InputField sessionName;
         [SerializeField] private TMP_InputField portNumber;
         [SerializeField] private TMP_InputField playerCount;
@@ -42,6 +45,7 @@ namespace LegacyLoot
 
         #region private fields
         Region region;
+        NetworkRunner _cacheServerRunner;
         #endregion
 
         private void Start()
@@ -56,6 +60,10 @@ namespace LegacyLoot
 #endif
         }
 
+        private void OnEnable()
+        {
+            _cacheServerRunner = serverRunner;
+        }
 
         private void OnDestroy()
         {
@@ -64,8 +72,11 @@ namespace LegacyLoot
 
         private void OnApplicationQuit()
         {
+
             APIHandler.ShutDownServer();
         }
+
+        
 
         
         /// <summary>
@@ -80,11 +91,7 @@ namespace LegacyLoot
 
             Debug.Log($"{nameof(CheckServerWithInputRequirements)} \n {gameRoom.responseCode}");
 
-            /*while(APIHandler.RoomCreationResponseCode == 200)
-            {
-                StartServer();
-                break;
-            }*/
+            
         }
 
         /// <summary>
@@ -92,6 +99,11 @@ namespace LegacyLoot
         /// </summary>
         public async void StartServer()
         {
+            if(serverRunner == null)
+            {
+                serverRunner = _cacheServerRunner;
+            }
+
             serverRunner.name = $"Server Network Runner";
 
             var photonAppSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
@@ -110,7 +122,7 @@ namespace LegacyLoot
                 DisableClientSessionCreation = false,
             };
 
-            var startGame = await serverRunner.StartGame(startGameArgs);
+            StartGameResult startGame = await serverRunner.StartGame(startGameArgs);
 
             if (startGame.Ok == true)
             {
