@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: -6284150530440827758}
   - component: {fileID: 2190285911731371142}
   - component: {fileID: 2230173614190195977}
+  - component: {fileID: 369487900690345910}
   m_Layer: 7
   m_Name: Red Capsule
   m_TagString: Player
@@ -278,6 +279,7 @@ MonoBehaviour:
   - {fileID: -6284150530440827758}
   - {fileID: 2190285911731371142}
   - {fileID: 2230173614190195977}
+  - {fileID: 369487900690345910}
   SimulationBehaviours: []
 --- !u!114 &-6284150530440827758
 MonoBehaviour:
@@ -356,13 +358,32 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  hitboxRoot: {fileID: 2190285911731371142}
   weapon2Position: {fileID: 2792999437134812429}
   _tppVirtualCamera: {fileID: 0}
   _mainCamera: {fileID: 0}
   rayHit: 0
   lagCompensatedHitDistance: 0
   runnerTick: 0
+--- !u!114 &369487900690345910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843067535118072890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adc3e71e094b0240b4bedc2a3295864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+  _GoldCount: 0
+  _SilverCount: 0
+  _BronzeCount: 0
+  _NetDict:
+    _items: []
 --- !u!1 &2208318012171295787
 GameObject:
   m_ObjectHideFlags: 0

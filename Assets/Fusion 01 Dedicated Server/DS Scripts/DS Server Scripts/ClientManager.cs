@@ -177,8 +177,6 @@ namespace LegacyLoot
             GameRoom gameRoom
             )
         {
-
-
             var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
 
             // appSettings.FixedRegion = _region.ToString().ToLower(); 

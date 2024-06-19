@@ -61,7 +61,7 @@ public class CapsulePlayerController : CharacterControlManager
 
     void Start()
     {
-        // Debug.Log($"Object Id {Object.Id.ToString()}");
+        
     }
 
     private void OnEnable()
@@ -73,6 +73,8 @@ public class CapsulePlayerController : CharacterControlManager
     private void OnDisable()
     {
         UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
+        Debug.Log($"<color=red>{nameof(CapsulePlayerController)} \t </color>");
+        // Application.Quit();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -123,16 +125,9 @@ public class CapsulePlayerController : CharacterControlManager
         DetectGround();
 
         runnerTick = Runner.Tick;
-        // Debug.Log($"Runner. {Runner.Tick}");
-
         if (timer.Expired(Runner))
         {
-            // Execute Logic
-
-            // Reset timer
             timer = TickTimer.None;
-            // alternatively: timer = default.
-
             Debug.Log("Timer Expired");
         }
     }
