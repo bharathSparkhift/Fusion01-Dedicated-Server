@@ -88,10 +88,16 @@ namespace LegacyLoot_API
         /// <summary>
         /// Kill all the running server OnButtonClick
         /// </summary>
-        public void ShutDownServer()
+        public async void ShutDownServer()
         {
-            StartCoroutine(DeleteRoomWithUnityWebRequest(DeleteRoomEndPoint));
+            
+            ServerGameController serverGameController = FindObjectOfType<ServerGameController>();
+            if (serverGameController == null)
+                return;
+            TaskStatus taskStatus = await serverGameController.ShutDownServer();
             serverManager.ToggleButtons(true);
+            StartCoroutine(DeleteRoomWithUnityWebRequest(DeleteRoomEndPoint));
+
             Debug.Log($"{nameof(ShutDownServer)}");
         }
 
