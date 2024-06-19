@@ -20,6 +20,8 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipeline.Universal.ShaderLibrary;
 --assembly-defines=Unity.Timeline;
+--assembly-defines=Unity.InputSystem;
+--assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Fusion.Addressables;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=Unity.Mathematics;
@@ -89,6 +91,8 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipeline.Universal.ShaderLibrary;
 --assembly-defines=Unity.Timeline;
+--assembly-defines=Unity.InputSystem;
+--assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Fusion.Addressables;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=Unity.Mathematics;
@@ -156,6 +160,8 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipeline.Universal.ShaderLibrary;
 --assembly-defines=Unity.Timeline;
+--assembly-defines=Unity.InputSystem;
+--assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Fusion.Addressables;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=Unity.Mathematics;
@@ -229,6 +235,8 @@ Library: D:\Bharath\Fusion 01\Fusion 01 Dedicated Server\Temp\BurstOutput\Data\P
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipeline.Universal.ShaderLibrary;
 --assembly-defines=Unity.Timeline;
+--assembly-defines=Unity.InputSystem;
+--assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=Fusion.Addressables;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=Unity.Mathematics;

@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Fusion 01 Dedicated Server/DS Scenes/Server.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Fusion 01 Dedicated Server/DS Scenes/Client.unity
+    path: Assets/Fusion 01 Dedicated Server/DS Scenes/Menu.unity
     guid: 39e672a84ba56f24faf89b0b4600d5bb
   - enabled: 1
     path: Assets/Fusion 01 Dedicated Server/DS Scenes/Game.unity
     guid: 7788acc09dbc95d4ea37885cc1943dea
+  - enabled: 0
+    path: Assets/Fusion 01 Dedicated Server/DS Scenes/Lobby.unity
+    guid: 7ead289f992d05847a24424fd30ac421
   m_configObjects: {}

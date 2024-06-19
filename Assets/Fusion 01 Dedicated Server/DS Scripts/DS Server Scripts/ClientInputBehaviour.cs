@@ -8,43 +8,63 @@ using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-/// <summary>
-/// Client controller, attach this to the Client Network Runner prefab.
-/// 
-/// Reads the Players Input from the local device and pass it onto the INetworkInput struct to store the values on the server side. 
-/// </summary>
+
 public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 {
 
 
     [field: SerializeField] public TouchPad _touchPad { get; private set; }
-    [SerializeField] private Camera _camera;
+    [SerializeField] private Camera         _camera;
+    [SerializeField] private double         _ping;
 
-    Vector2 _move;
-    bool _jump;
-    bool _weaponCollect;
-    GameSceneManager _gameSceneManager;
+    InputControls       _inputControls;
+    Vector2             _move;
+    bool                _jump;
+    bool                _weaponCollect;
+    GameSceneManager    _gameSceneManager;
+
+    NetworkRunner       _currentNetworkRunner;
+    PlayerRef           _playerRef;
 
 
-
+    
 
     #region Monobehaviour callbacks
     private void Awake()
     {
+        _inputControls = new InputControls();
         _gameSceneManager = new GameSceneManager();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    private void OnEnable()
+    {
+        _inputControls?.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _inputControls?.Disable();
+    }
+
     void Update()
     {
-        _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        _jump = Input.GetKeyDown(KeyCode.Space); // || Input.GetKeyDown(KeyCode.J);
-        _weaponCollect = Input.GetKeyDown(KeyCode.C); // || Input.GetKeyDown(KeyCode.J);
+        
+    }
+
+    void LateUpdate()
+    {
+        _move           = _inputControls.Player.Move.ReadValue<Vector2>();
+
+        _move.Normalize();
+
+        _jump           = _inputControls.Player.Jump.IsPressed();
+
+        _weaponCollect  = _inputControls.Player.ItemCollect.IsPressed();
     }
 
 
@@ -59,6 +79,16 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
         _touchPad = GameObject.FindObjectOfType<TouchPad>();
         _camera = GameObject.FindObjectOfType<Camera>();
 
+        if (_playerRef == null)
+            return;
+        _ping = Runner.GetPlayerRtt(_playerRef) * 1000;
+
+
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        
     }
     #endregion
 
@@ -66,8 +96,9 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         InputStorage _inputStorage = new InputStorage();
+
         _inputStorage.Move = _move;
-        _inputStorage.PlayerButtons.Set(PlayerInputButtons.Jump, _jump);
+
         _inputStorage.PlayerButtons.Set(PlayerInputButtons.Jump, _jump);
 
         // Check for camera
@@ -80,18 +111,18 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     }
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        // _gameSceneManager.AddPlayersToDictionary(player.PlayerId, )
+        _playerRef = player;
+        Debug.Log($"{nameof(ClientInputBehaviour)} \t {nameof(OnPlayerJoined)} \t PlayerRef {_playerRef} \t Player {player}");
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-
         Debug.Log($"{nameof(ClientInputBehaviour)} \t {nameof(OnPlayerLeft)}");
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        // Debug.Log($"{nameof(OnInputMissing)}");
+
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)

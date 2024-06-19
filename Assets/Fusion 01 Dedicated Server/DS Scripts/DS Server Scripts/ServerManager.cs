@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using UnityEngine.UI;
+using LegacyLoot_API;
 
-namespace Game15Server
+namespace LegacyLoot
 {
     /// <summary>
     /// ServerManager
@@ -21,7 +22,7 @@ namespace Game15Server
         {
             asia,  
             kr,
-            us
+            us  
         }
 
         #region Serialize Private Fields
@@ -29,9 +30,14 @@ namespace Game15Server
         [SerializeField] private TMP_InputField sessionName;
         [SerializeField] private TMP_InputField portNumber;
         [SerializeField] private TMP_InputField playerCount;
-        [SerializeField] private Button         startAsServerButton;
+        [SerializeField] private Button         startServerButton;
+        [SerializeField] private Button         killServerButton;
         [SerializeField] private Button         getIntoClientScene;
         [SerializeField] private TMP_Dropdown   serverRegion;
+        #endregion
+
+        #region Public fields
+        public Server_API_Handler APIHandler;
         #endregion
 
         #region private fields
@@ -50,13 +56,42 @@ namespace Game15Server
 #endif
         }
 
+
+        private void OnDestroy()
+        {
+            
+        }               
+
+        private void OnApplicationQuit()
+        {
+            APIHandler.ShutDownServer();
+        }
+
+        
+        /// <summary>
+        /// Check the server with the inputs OnButtonClick
+        /// </summary>
+        public void CheckServerWithInputRequirements()
+        {
+            GameRoom gameRoom = APIHandler.CreateRoomOnServerStart(portNumber: portNumber.text.Trim(),
+                roomName: sessionName.text.Trim(),
+                region: region.ToString().Trim(),
+                maxPlayers: playerCount.text.Trim());
+
+            Debug.Log($"{nameof(CheckServerWithInputRequirements)} \n {gameRoom.responseCode}");
+
+            /*while(APIHandler.RoomCreationResponseCode == 200)
+            {
+                StartServer();
+                break;
+            }*/
+        }
+
         /// <summary>
         /// Start server OnButtonClick()
         /// </summary>
         public async void StartServer()
         {
-
-            
             serverRunner.name = $"Server Network Runner";
 
             var photonAppSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
@@ -73,24 +108,23 @@ namespace Game15Server
                 CustomPhotonAppSettings = photonAppSettings,
                 PlayerCount = Int32.Parse(playerCount.text.Trim()),
                 DisableClientSessionCreation = false,
-
-
             };
-            var startGame = await serverRunner.StartGame(startGameArgs);
 
+            var startGame = await serverRunner.StartGame(startGameArgs);
 
             if (startGame.Ok == true)
             {
-                startAsServerButton.gameObject.SetActive(false);
-                getIntoClientScene.gameObject.SetActive(false);
-                Debug.Log($"Server Result {startGame.Ok} ");
+                ToggleButtons(false);
+                Debug.Log($"Start Game Result {startGame}");
             }
             else
             {
-                Debug.LogError($"Server Result {startGame.ShutdownReason} :\n Game args {startGameArgs}");
+                Debug.Log($"<color=red>Server Result {startGame.ShutdownReason} :\n Game args {startGameArgs}</color>");
             }
 
         }
+
+        
 
         /// <summary>
         /// Get into the client scene
@@ -120,6 +154,13 @@ namespace Game15Server
             }
 
             Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {region}");
+        }
+
+        public void ToggleButtons(bool value)
+        {
+            startServerButton.gameObject.SetActive(value);
+            killServerButton.gameObject.SetActive(!value);
+            getIntoClientScene.gameObject.SetActive(value);
         }
 
 

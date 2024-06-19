@@ -9,14 +9,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using static Game15Server.ServerManager;
+using LegacyLoot_API;
 
-namespace Game15Server
+
+namespace LegacyLoot
 {
     /// <summary>
     /// Client manager script to instantiate the clients on the network.
     /// </summary>
-    public class ClientManager : SimulationBehaviour
+    public class ClientManager : MonoBehaviour, INetworkRunnerCallbacks
     {
 
         #region Serialize private fields
@@ -29,9 +30,17 @@ namespace Game15Server
         /// </summary>
         [SerializeField] private Camera mainCamera;
         /// <summary>
-        /// Canvas
+        /// Menu Selection Canvas
         /// </summary>
-        [SerializeField] private Canvas canvas;
+        [SerializeField] private Canvas     menuSelectionCanvas;
+        /// <summary>
+        /// Capsule Selection Canvas
+        /// </summary>
+        [SerializeField] private Canvas     capsuleSelectionCanvas;
+        /// <summary>
+        /// Capsule Player
+        /// </summary>
+        [SerializeField] private Transform  capsulePlayerSelection;
         /// <summary>
         /// Session name.
         /// </summary>
@@ -51,11 +60,24 @@ namespace Game15Server
         private NetworkRunner _instanceRunner;
         #endregion
 
+        [field: SerializeField]public Client_API_Handler ClientAPIHandler { get; private set; }
+        [SerializeField] ClientIndividualSessionUi[] clientIndividualSessionUis;
+        [SerializeField] float clientIndividualSessionUiDisplayDelay = 1f;
+
+
         #region Monobehaviour callbacks
         // Start is called before the first frame update
         void Start()
         {
-            StartClientRunner();
+            
+        }
+
+        private void OnEnable()
+        {
+            foreach(var client in clientIndividualSessionUis)
+            {
+                client.gameObject.SetActive(false);
+            }
         }
 
         #endregion
@@ -72,22 +94,38 @@ namespace Game15Server
             var runner = Instantiate(_clientNetworkRunner);
             runner.name = name;
             runner.ProvideInput = true;
+            runner.AddCallbacks(this);
             return runner;
         }
         #endregion
 
         #region Private fields
-        Region _region;
         #endregion
 
+        public IEnumerator UpdateUi(int index, GameRoom gameRoom)
+        {
+            yield return new WaitForSeconds(clientIndividualSessionUiDisplayDelay); 
+            clientIndividualSessionUis[index].UpdateDetails(gameRoom);
+            clientIndividualSessionUis[index].gameObject.SetActive(true);
+        }
 
-        public void StartClientRunner()
+        public void JoinRoom(int index)
+        {
+            GameRoom selectedGameRoom = ClientAPIHandler.GameRoomsArray[index];
+            Debug.Log($"{nameof(JoinRoom)} \t index {index}");
+            StartClientRunner(index, selectedGameRoom);
+            
+        }
+
+
+        public void StartClientRunner(int index, GameRoom gameRoom)
         {
             _instanceRunner = GetRunner("[client network runner]");
             Debug.Log($"{nameof(StartClientRunner)}");
+            StartClient(index, gameRoom);
         }
 
-        public void NewSessionDetails()
+        /*public void NewSessionDetails()
         {
             Debug.Log($"{nameof(NewSessionDetails)} Session Available");
             List<SessionInfo> sessionList = new List<SessionInfo>();
@@ -100,26 +138,29 @@ namespace Game15Server
                 Debug.Log($"Is visible {sessionInfo.MaxPlayers}");
             }
             
-        }
+        }*/
 
         #region Public methods
         /// <summary>
         /// Start the client on button click.
         /// </summary>
-        public async void StartClient()
+        public async void StartClient(int index, GameRoom gameRoom)
         {
 
-            var result = await StartSimulation(_instanceRunner, GameMode.Client, sessionName.text.Trim());
+            var result = await StartSimulation(_instanceRunner, GameMode.Client, index, gameRoom);
             
             if (result.Ok == true)
             {
                 mainCamera.gameObject.SetActive(false);
-                canvas.gameObject.SetActive(false);
-                Debug.Log($"Client Result {result.ToString()}");
+                menuSelectionCanvas.gameObject.SetActive(false);
+                capsuleSelectionCanvas.gameObject.SetActive(false);
+                capsulePlayerSelection.gameObject.SetActive(false);
+                Debug.Log($"<color=green>Client Result {result}</color>");
             }
             else
             {
-                Debug.LogError($"Client Result {result.ToString()}");
+                Debug.Log($"<color=red>Failed to join the room</color>");
+                Debug.Log($"<color=red>Shut down reason {result.ShutdownReason} \n Error message {result.ErrorMessage}</color>");
             }
         }
 
@@ -131,19 +172,25 @@ namespace Game15Server
             SceneManager.LoadSceneAsync(0);
         }
 
+
+        
+
         public Task<StartGameResult> StartSimulation(
             NetworkRunner runner,
             GameMode gameMode,
-            string sessionName)
+            int index,
+            GameRoom gameRoom
+            )
         {
-            Debug.Log($"------------------------{nameof(ClientManager)} : {gameMode}------------------------");
+
 
             var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
-            appSettings.FixedRegion = _region.ToString().ToLower(); 
+
+            // appSettings.FixedRegion = _region.ToString().ToLower(); 
 
             return runner.StartGame(new StartGameArgs()
             {
-                SessionName = sessionName,
+                SessionName = clientIndividualSessionUis[index].RoomName,
                 GameMode = gameMode,
                 SceneManager = runner.gameObject.AddComponent<NetworkSceneManagerDefault>(),
                 Scene = SceneManager.GetActiveScene().buildIndex + 1,
@@ -162,7 +209,7 @@ namespace Game15Server
         public void RegionOnValueChanged(int value)
         {
 
-            switch (value)
+            /*switch (value)
             {
                 case 0:
                     _region = Region.asia;
@@ -175,10 +222,90 @@ namespace Game15Server
                     break;
             }
 
-            Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {_region}");
+            Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {_region}");*/
         }
 
-        
+        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+        {
+            
+        }
+
+        public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+        {
+            
+        }
+
+        public void OnInput(NetworkRunner runner, NetworkInput input)
+        {
+            
+        }
+
+        public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
+        {
+            
+        }
+
+        public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
+        {
+            
+        }
+
+        public void OnConnectedToServer(NetworkRunner runner)
+        {
+            
+        }
+
+        public void OnDisconnectedFromServer(NetworkRunner runner)
+        {
+            
+        }
+
+        public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
+        {
+            
+        }
+
+        public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
+        {
+            
+        }
+
+        public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
+        {
+            
+        }
+
+        public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+        {
+            
+        }
+
+        public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+        {
+            
+        }
+
+        public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+        {
+            
+        }
+
+        public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
+        {
+            
+        }
+
+        public void OnSceneLoadDone(NetworkRunner runner)
+        {
+            
+        }
+
+        public void OnSceneLoadStart(NetworkRunner runner)
+        {
+            
+        }
+
+
         #endregion
 
     }
