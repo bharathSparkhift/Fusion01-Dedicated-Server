@@ -67,14 +67,16 @@ public class CapsulePlayerController : CharacterControlManager
     private void OnEnable()
     {
         _networkRunner = Runner;
+        UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
         UiHandler.OnUiHandler += DestroyPlayerOnLeft;
+        Debug.Log($"<color=green>{nameof(CapsulePlayerController)} \t </color>");
     }
 
     private void OnDisable()
     {
-        UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
-        Debug.Log($"<color=red>{nameof(CapsulePlayerController)} \t </color>");
-        // Application.Quit();
+        
+        
+        
     }
 
     private void OnCollisionEnter(Collision collision)
