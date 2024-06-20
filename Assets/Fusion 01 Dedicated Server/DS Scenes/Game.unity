@@ -1337,6 +1337,7 @@ GameObject:
   - component: {fileID: 559913646}
   - component: {fileID: 559913648}
   - component: {fileID: 559913649}
+  - component: {fileID: 559913650}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -1430,7 +1431,8 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: 60ca9ae710394faeba495747fcb626e8
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 559913650}
   SimulationBehaviours: []
 --- !u!135 &559913649
 SphereCollider:
@@ -1453,6 +1455,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.49999997
   m_Center: {x: -0.0000019073486, y: -0.00000011920929, z: 0}
+--- !u!114 &559913650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559913644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdfc3c2e2e4e14cb2c2355ab7d88d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+  ItemNameEnum: 1
 --- !u!1 &849407885
 GameObject:
   m_ObjectHideFlags: 3
@@ -1875,6 +1893,7 @@ GameObject:
   - component: {fileID: 1247212697}
   - component: {fileID: 1247212699}
   - component: {fileID: 1247212700}
+  - component: {fileID: 1247212701}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1968,7 +1987,8 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: d1b0b83e61514fe3a979f6b401b803a5
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 1247212701}
   SimulationBehaviours: []
 --- !u!135 &1247212700
 SphereCollider:
@@ -1991,6 +2011,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.49999997
   m_Center: {x: -0.0000009536743, y: -0.00000011920929, z: -0.00000047683716}
+--- !u!114 &1247212701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247212695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdfc3c2e2e4e14cb2c2355ab7d88d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+  ItemNameEnum: 1
 --- !u!1 &1332224890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,6 +2357,7 @@ GameObject:
   - component: {fileID: 1385647224}
   - component: {fileID: 1385647226}
   - component: {fileID: 1385647227}
+  - component: {fileID: 1385647228}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2414,7 +2451,8 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: 3c470ea18c2b42d6b8722c62a98135aa
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 1385647228}
   SimulationBehaviours: []
 --- !u!65 &1385647227
 BoxCollider:
@@ -2437,6 +2475,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Center: {x: 0, y: -0.00000011920929, z: -0.0000009536743}
+--- !u!114 &1385647228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385647221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdfc3c2e2e4e14cb2c2355ab7d88d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+  ItemNameEnum: 0
 --- !u!1 &1445033411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,6 +2908,8 @@ GameObject:
   - component: {fileID: 2000286176}
   - component: {fileID: 2000286175}
   - component: {fileID: 2000286174}
+  - component: {fileID: 2000286177}
+  - component: {fileID: 2000286178}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -2949,6 +3005,46 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000286172}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2000286177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000286172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdfc3c2e2e4e14cb2c2355ab7d88d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
+  ItemNameEnum: 2
+--- !u!114 &2000286178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000286172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: 2e3446b04d1d4d8a85101e54b693f369
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2000286177}
+  SimulationBehaviours: []
 --- !u!33 &15651221396544388
 MeshFilter:
   m_ObjectHideFlags: 0

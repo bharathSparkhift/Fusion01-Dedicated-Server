@@ -1,61 +1,64 @@
-using UnityEngine;
 using Fusion;
-using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class BagPackage : NetworkBehaviour
 {
-
-    public struct CollectedDataItem : INetworkStruct
-    {
-
-    }
-
     [Networked] public int GoldCount { get; set; }
-    [Networked] public int SilverCount {  get; set; }
-    [Networked] public int BronzeCount  { get; set; }
+    [Networked] public int SilverCount { get; set; }
+    [Networked] public int BronzeCount { get; set; }
 
     [Networked]
-    [Capacity(4)] 
-    [UnitySerializeField] 
-    private NetworkDictionary<int, int> NetDict => default;
+    [Capacity(4)]
+    [UnitySerializeField]
+    private NetworkDictionary<NetworkString<_16>, int> NetDict => default;
 
-    #region
-    void Start()
+    private void OnEnable()
     {
-        
+        CollectableItem.CollectableItemHandler += AddItemsToBag;
+    }
+
+    private void OnDisable()
+    {
+        CollectableItem.CollectableItemHandler -= AddItemsToBag;
     }
 
     private void OnTriggerEnter(UnityEngine.Collider other)
     {
-        AddItemsToBag(0);
+        var item = other.GetComponent<CollectableItem>();
+        if (item != null)
+        {
+            item.CollectItem();
+        }
+        else
+        {
+            Debug.Log("<color=red>CollectableItem script not found</color>");
+        }
     }
 
-    #endregion
-
-
-    public void AddItemsToBag(int value)
+    private void AddItemsToBag(CollectableItem item)
     {
-        if(value ==  0)
+        switch (item.ItemNameEnum)
         {
-            GoldCount += 1;
-            NetDict.Set(0, GoldCount);
-        }else if(value == 1)
-        {
-            SilverCount += 1;
-            NetDict.Set(1, SilverCount);
-        }
-        else if (value == 2)
-        {
-            BronzeCount += 1;
-            NetDict.Set(2, BronzeCount);
+            case CollectableItem.ItemName.Gold:
+                GoldCount += 1;
+                NetDict.Set("Gold", GoldCount);
+                break;
+            case CollectableItem.ItemName.Silver:
+                SilverCount += 1;
+                NetDict.Set("Silver", SilverCount);
+                break;
+            case CollectableItem.ItemName.Bronze:
+                BronzeCount += 1;
+                NetDict.Set("Bronze", BronzeCount);
+                break;
         }
 
-        print($"<color=green>Dictionay count {NetDict.Count}</color>");
-        foreach(var  item in NetDict)
+        Debug.Log($"<color=green>Dictionary count {NetDict.Count}</color>");
+        foreach (var entry in NetDict)
         {
-            print($"<color=green>Dictionay \t key {item.Key} \t value {item.Value}</color>");
+            Debug.Log($"<color=green>Dictionary key {entry.Key} value {entry.Value}</color>");
         }
     }
-
-
 }
