@@ -49,17 +49,14 @@ public class BagPackage : NetworkBehaviour
         {
             case CollectableItem.ItemName.Gold:
                 GoldCount += 1;
-                //NetDict.Set("Gold", GoldCount);
                 CollectableItemDictionary["Gold"] = GoldCount;
                 break;
             case CollectableItem.ItemName.Silver:
                 SilverCount += 1;
-                //NetDict.Set("Silver", SilverCount);
                 CollectableItemDictionary["Silver"] = SilverCount;
                 break;
             case CollectableItem.ItemName.Bronze:
                 BronzeCount += 1;
-                //NetDict.Set("Bronze", BronzeCount);
                 CollectableItemDictionary["Bronze"] = BronzeCount;
                 break;
         }
