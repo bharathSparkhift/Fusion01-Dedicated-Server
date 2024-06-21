@@ -37,6 +37,7 @@ namespace LegacyLoot
         [SerializeField] private Button         killServerButton;
         [SerializeField] private Button         getIntoClientScene;
         [SerializeField] private TMP_Dropdown   serverRegion;
+        [SerializeField] private TMP_Text       messageText;
         #endregion
 
         #region Public fields
@@ -127,11 +128,13 @@ namespace LegacyLoot
             if (startGame.Ok == true)
             {
                 ToggleButtons(false);
-                Debug.Log($"Start Game Result {startGame}");
+                messageText.text = $"Start Game Result {startGame}";
+                Debug.Log($"{messageText.text}");
             }
             else
             {
-                Debug.Log($"<color=red>Server Result {startGame.ShutdownReason} :\n Game args {startGameArgs}</color>");
+                messageText.text = $"<color=red>Server Result {startGame.ShutdownReason} :\n Game args {startGameArgs}</color>";
+                Debug.Log($"{messageText.text}");
             }
 
         }

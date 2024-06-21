@@ -42,13 +42,9 @@ namespace LegacyLoot
         /// </summary>
         [SerializeField] private Transform  capsulePlayerSelection;
         /// <summary>
-        /// Session name.
+        /// Message out put text
         /// </summary>
-        [SerializeField] private TMP_InputField sessionName;
-        /// <summary>
-        /// Region drop down menu.
-        /// </summary>
-        [SerializeField] private TMP_Dropdown clientRegionDropDownMenu;
+        [SerializeField] private TMP_Text messageText;
         #endregion
 
 
@@ -150,12 +146,14 @@ namespace LegacyLoot
                 menuSelectionCanvas.gameObject.SetActive(false);
                 capsuleSelectionCanvas.gameObject.SetActive(false);
                 capsulePlayerSelection.gameObject.SetActive(false);
-                Debug.Log($"<color=green>Client Result {result}</color>");
+                messageText.text = $"<color=green>Client Result {result}</color>"; 
+                Debug.Log($"{messageText.text}");
             }
             else
             {
-                Debug.Log($"<color=red>Failed to join the room</color>");
-                Debug.Log($"<color=red>Shut down reason {result.ShutdownReason} \n Error message {result.ErrorMessage}</color>");
+                messageText.text = $"<color=red>Failed to join the room</color> \n <color=red>Shut down reason {result.ShutdownReason} \n Error message {result.ErrorMessage}</color>";
+                Debug.Log($"{messageText.text}");
+                
             }
         }
 

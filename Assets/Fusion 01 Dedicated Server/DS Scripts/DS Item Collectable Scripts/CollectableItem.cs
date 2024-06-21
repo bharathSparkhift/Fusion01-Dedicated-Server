@@ -18,6 +18,14 @@ public class CollectableItem : NetworkBehaviour
     public delegate void CollectableItemDelegate(CollectableItem collectableItem);
     public static event CollectableItemDelegate CollectableItemHandler;
 
+    [Networked(OnChanged = nameof(OnIsCollectedChanged))]
+    public NetworkBool IsCollected { get; set; }
+
+    public static void OnIsCollectedChanged(Changed<CollectableItem> changed)
+    {
+        changed.Behaviour.DisableGameObject();
+    }
+
 
     #region Monobehaviour callbacks
     // Start is called before the first frame update
@@ -31,8 +39,15 @@ public class CollectableItem : NetworkBehaviour
 
     public void CollectItem()
     {
-        CollectableItemHandler?.Invoke(this);
-        DisableGameObject();
+        
+        if(!IsCollected)
+        {
+            CollectableItemHandler?.Invoke(this);
+            IsCollected = true;
+            Debug.Log($"<color=green>{nameof(CollectableItem)} \t {nameof(CollectItem)}</color>");
+        }
+        
+
     }
 
     

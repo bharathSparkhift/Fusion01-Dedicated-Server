@@ -197,7 +197,8 @@ public class CapsulePlayerController : CharacterControlManager
 
     void DestroyPlayerOnLeft()
     {
-
+        if (!Object.HasInputAuthority)
+            return;
         Runner.Shutdown();
         Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
     }

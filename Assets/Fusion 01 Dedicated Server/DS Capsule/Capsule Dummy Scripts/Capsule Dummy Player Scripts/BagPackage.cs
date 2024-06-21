@@ -1,40 +1,52 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BagPackage : NetworkBehaviour
 {
-    [Networked] public int GoldCount { get; set; }
+    /*[Networked] public int GoldCount { get; set; }
     [Networked] public int SilverCount { get; set; }
-    [Networked] public int BronzeCount { get; set; }
+    [Networked] public int BronzeCount { get; set; }*/
 
     [Networked]
     [Capacity(4)]
     [UnitySerializeField]
     private NetworkDictionary<NetworkString<_16>, int> NetDict => default;
 
+
+    private int GoldCount; 
+    private int SilverCount;
+    private int BronzeCount;
+
     private void OnEnable()
     {
         CollectableItem.CollectableItemHandler += AddItemsToBag;
+        // CollectableItem.CollectableItemHandler += DisableCollectableItem;
     }
+
+    
 
     private void OnDisable()
     {
         CollectableItem.CollectableItemHandler -= AddItemsToBag;
+        // CollectableItem.CollectableItemHandler -= DisableCollectableItem;
     }
 
     private void OnTriggerEnter(UnityEngine.Collider other)
     {
         var item = other.GetComponent<CollectableItem>();
-        if (item != null)
+        item.CollectItem();
+        /*if (item != null && Object.HasInputAuthority)
         {
-            item.CollectItem();
+            
         }
         else
         {
             Debug.Log("<color=red>CollectableItem script not found</color>");
-        }
+        }*/
+
     }
 
     private void AddItemsToBag(CollectableItem item)
@@ -61,4 +73,11 @@ public class BagPackage : NetworkBehaviour
             Debug.Log($"<color=green>Dictionary key {entry.Key} value {entry.Value}</color>");
         }
     }
+
+    /*private void DisableCollectableItem(CollectableItem collectableItem)
+    {
+        
+    }*/
+
+
 }
