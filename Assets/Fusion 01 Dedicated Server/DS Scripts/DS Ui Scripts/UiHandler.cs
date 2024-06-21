@@ -66,6 +66,7 @@ public class UiHandler : NetworkBehaviour
 
     public void UpdateCoinCollectionOnUi(int gold, int silver, int bronze)
     {
+        
         goldCoinCountText.text = gold.ToString();
         silverCoinCountText.text = silver.ToString();
         bronzeCoinCountText.text = bronze.ToString();

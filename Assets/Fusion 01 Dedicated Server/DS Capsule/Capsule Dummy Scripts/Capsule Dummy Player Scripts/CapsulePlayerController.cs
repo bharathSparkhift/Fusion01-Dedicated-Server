@@ -36,9 +36,9 @@ public class CapsulePlayerController : CharacterControlManager
 
     #region Public fields
     // public NetworkRunner _networkRunner { get; private set; }
-    public CinemachineVirtualCamera _tppVirtualCamera;
+    // public CinemachineVirtualCamera _tppVirtualCamera;
     public Transform _mainCamera;
-    public bool rayHit;
+    // public bool rayHit;
     public LagCompensatedHit lagCompensatedHit;
     
     //=========================================
@@ -99,7 +99,7 @@ public class CapsulePlayerController : CharacterControlManager
 
     private void Update()
     {
-        Debug.DrawLine(transform.position, -transform.up * 1, Color.red);
+        // Debug.DrawLine(transform.position, -transform.up * 1, Color.red);
     }
 
     #endregion
@@ -107,13 +107,19 @@ public class CapsulePlayerController : CharacterControlManager
     #region NetworkRunnercallbacks
     public override void Render()
     {
-        if (!_cameraAssignedToPlayer && Object.HasInputAuthority)
+        /*if (!_cameraAssignedToPlayer && Object.HasInputAuthority)
         {
             _tppVirtualCamera = GameObject.FindGameObjectWithTag("TPP Camera").GetComponent<CinemachineVirtualCamera>();
             _tppVirtualCamera.Follow = this.transform;
             _mainCamera = Camera.main.transform;
             FirstPersonCamera.Instance.Target = this.transform;
             Debug.Log("Camera assigned to player.........");
+            _cameraAssignedToPlayer = true;
+        }*/
+        if (!_cameraAssignedToPlayer && Object.HasInputAuthority)
+        {
+            CameraHandler cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
+            cameraHandler.SetPlayer(transform);
             _cameraAssignedToPlayer = true;
         }
     }
@@ -143,14 +149,15 @@ public class CapsulePlayerController : CharacterControlManager
     #region Base class methods
     public override void Move(InputStorage inputStorageOut)
     {
-        Vector3 direction = (transform.forward * inputStorageOut.Move.y + transform.right * inputStorageOut.Move.x) * Runner.DeltaTime * moveSpeed;
+        // Vector3 direction = (transform.forward * inputStorageOut.Move.y + transform.right * inputStorageOut.Move.x) * Runner.DeltaTime * moveSpeed;
+        Vector3 direction = -(transform.right * inputStorageOut.Move.x) * Runner.DeltaTime * moveSpeed;
         direction += transform.position;
 
         rb.MovePosition(direction);
 
-        transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, transform.eulerAngles.y, 0),
+        /*transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, transform.eulerAngles.y, 0),
                                                 Quaternion.Euler(0, inputStorageOut.CameraYrotation, 0),
-                                                Runner.DeltaTime * rotationSpeed);
+                                                Runner.DeltaTime * rotationSpeed);*/
     }
 
     public override void Jump(InputStorage inputStorageOut)
@@ -184,9 +191,9 @@ public class CapsulePlayerController : CharacterControlManager
 
     void DetectGround()
     {
-        rayHit = Runner.LagCompensation.Raycast(transform.position, -transform.up, rayLength, player: Object.InputAuthority, out var hit, layerMask, HitOptions.SubtickAccuracy);
-        lagCompensatedHit = hit;
-        lagCompensatedHitDistance = hit.Distance;
+        // rayHit = Runner.LagCompensation.Raycast(transform.position, -transform.up, rayLength, player: Object.InputAuthority, out var hit, layerMask, HitOptions.SubtickAccuracy);
+        // lagCompensatedHit = hit;
+        // lagCompensatedHitDistance = hit.Distance;
     }
 
     void DetectObstacles()

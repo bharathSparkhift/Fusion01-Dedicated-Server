@@ -31,7 +31,7 @@ namespace Game15Server
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
-            var character = runner.Spawn(this.player, new Vector3(0,2,0), Quaternion.identity, inputAuthority: player);
+            var character = runner.Spawn(this.player, new Vector3(18,2,17), inputAuthority: player);
             _playerMap[player] = character;
             Debug.Log($"Spawn for Player: {player}");
 

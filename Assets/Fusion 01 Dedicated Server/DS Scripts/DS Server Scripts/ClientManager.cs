@@ -212,7 +212,6 @@ namespace LegacyLoot
                     _region = Region.us;
                     break;
             }
-
             Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {_region}");*/
         }
 
