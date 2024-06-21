@@ -6,14 +6,15 @@ using UnityEngine;
 
 public class BagPackage : NetworkBehaviour
 {
-    /*[Networked] public int GoldCount { get; set; }
-    [Networked] public int SilverCount { get; set; }
-    [Networked] public int BronzeCount { get; set; }*/
-
     [Networked]
     [Capacity(4)]
     [UnitySerializeField]
     private NetworkDictionary<NetworkString<_16>, int> NetDict => default;
+
+    /// <summary>
+    /// Item collected dictionary
+    /// </summary>
+    private Dictionary<string, int> CollectableItemDictionary = new Dictionary<string, int>();
 
 
     private int GoldCount; 
@@ -23,7 +24,7 @@ public class BagPackage : NetworkBehaviour
     private void OnEnable()
     {
         CollectableItem.CollectableItemHandler += AddItemsToBag;
-        // CollectableItem.CollectableItemHandler += DisableCollectableItem;
+       
     }
 
     
@@ -31,21 +32,14 @@ public class BagPackage : NetworkBehaviour
     private void OnDisable()
     {
         CollectableItem.CollectableItemHandler -= AddItemsToBag;
-        // CollectableItem.CollectableItemHandler -= DisableCollectableItem;
+
     }
 
     private void OnTriggerEnter(UnityEngine.Collider other)
     {
         var item = other.GetComponent<CollectableItem>();
         item.CollectItem();
-        /*if (item != null && Object.HasInputAuthority)
-        {
-            
-        }
-        else
-        {
-            Debug.Log("<color=red>CollectableItem script not found</color>");
-        }*/
+       
 
     }
 
@@ -55,22 +49,25 @@ public class BagPackage : NetworkBehaviour
         {
             case CollectableItem.ItemName.Gold:
                 GoldCount += 1;
-                NetDict.Set("Gold", GoldCount);
+                //NetDict.Set("Gold", GoldCount);
+                CollectableItemDictionary["Gold"] = GoldCount;
                 break;
             case CollectableItem.ItemName.Silver:
                 SilverCount += 1;
-                NetDict.Set("Silver", SilverCount);
+                //NetDict.Set("Silver", SilverCount);
+                CollectableItemDictionary["Silver"] = SilverCount;
                 break;
             case CollectableItem.ItemName.Bronze:
                 BronzeCount += 1;
-                NetDict.Set("Bronze", BronzeCount);
+                //NetDict.Set("Bronze", BronzeCount);
+                CollectableItemDictionary["Bronze"] = BronzeCount;
                 break;
         }
 
         Debug.Log($"<color=green>Dictionary count {NetDict.Count}</color>");
-        foreach (var entry in NetDict)
+        foreach (var collectableItem in CollectableItemDictionary)
         {
-            Debug.Log($"<color=green>Dictionary key {entry.Key} value {entry.Value}</color>");
+            Debug.Log($"<color=green>Dictionary key {collectableItem.Key} value {collectableItem.Value}</color>");
         }
     }
 

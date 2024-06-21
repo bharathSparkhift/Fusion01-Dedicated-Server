@@ -1307,6 +1307,7 @@ GameObject:
   - component: {fileID: 544025659}
   - component: {fileID: 544025661}
   - component: {fileID: 544025662}
+  - component: {fileID: 544025663}
   m_Layer: 5
   m_Name: Logout
   m_TagString: Untagged
@@ -1390,8 +1391,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1827743078}
           m_TargetAssemblyTypeName: UiHandler, Assembly-CSharp
-          m_MethodName: ScaleDownImageOnButtonClick
-          m_Mode: 2
+          m_MethodName: 
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 544025658}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
@@ -1406,8 +1407,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1827743078}
           m_TargetAssemblyTypeName: UiHandler, Assembly-CSharp
-          m_MethodName: ScaleUpImageOnButtonClick
-          m_Mode: 2
+          m_MethodName: 
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 544025658}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
@@ -1460,6 +1461,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &544025663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544025657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/escape
 --- !u!1 &556042527
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,6 +3164,7 @@ GameObject:
   - component: {fileID: 1827743077}
   - component: {fileID: 1827743076}
   - component: {fileID: 1827743078}
+  - component: {fileID: 1827743079}
   m_Layer: 0
   m_Name: '[Scripts]'
   m_TagString: Untagged
@@ -3196,8 +3211,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c855c56c13f7134ead3c3b41b565354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WordOffset: 0
+  WordCount: 0
+  _interpolationDataSource: 0
   jumpButton: {fileID: 1332224896}
-  logOutButton: {fileID: 544025662}
+--- !u!114 &1827743079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827743075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 0
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: a27ef4776170438da9dd9180ff9e4d7d
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1827743078}
+  SimulationBehaviours:
+  - {fileID: 1827743076}
 --- !u!33 &15651221396544388
 MeshFilter:
   m_ObjectHideFlags: 0

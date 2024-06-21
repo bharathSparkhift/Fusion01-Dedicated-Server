@@ -15,14 +15,14 @@ public class GameSceneManager : SimulationBehaviour
 
     private void OnEnable()
     {
-        UiHandler.OnUiHandler += MenuSceneLoad;
+        // UiHandler.OnUiHandler += MenuSceneLoad;
     }
 
     
 
     private void OnDisable()
     {
-        UiHandler.OnUiHandler -= MenuSceneLoad;
+        // UiHandler.OnUiHandler -= MenuSceneLoad;
     }
 
     // Start is called before the first frame update
@@ -31,10 +31,10 @@ public class GameSceneManager : SimulationBehaviour
         
     }
 
-    private void MenuSceneLoad()
+    /*private void MenuSceneLoad()
     {
         SceneManager.LoadSceneAsync(1);
-    }
+    }*/
 
 
 

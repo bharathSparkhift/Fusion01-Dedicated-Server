@@ -1,10 +1,11 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UiHandler : MonoBehaviour
+public class UiHandler : NetworkBehaviour
 {
     #region Public fields
     public delegate void UiHandlerDelegate();
@@ -13,19 +14,23 @@ public class UiHandler : MonoBehaviour
 
     #region Serialize private fields
     [SerializeField] Button jumpButton;
-    [SerializeField] Button logOutButton;
+    //[SerializeField] Button logOutButton;
     #endregion
 
     #region Monobehaviour callbacks
     private void OnEnable()
     {
-        logOutButton.onClick.AddListener(LogOutOnButtonClick);
+        /*if (!Object.HasInputAuthority)
+            return;*/
+        //logOutButton.onClick.AddListener(LogOutOnButtonClick);
         
     }
 
     private void OnDisable()
     {
-        logOutButton.onClick.RemoveAllListeners();
+        /*if (!Object.HasInputAuthority)
+            return;*/
+        //logOutButton.onClick.RemoveAllListeners();
 
     }
 
@@ -44,21 +49,27 @@ public class UiHandler : MonoBehaviour
     /// <summary>
     /// Logout button on click
     /// </summary>
-    void LogOutOnButtonClick()
+    /*void LogOutOnButtonClick()
     {
+        if (!Object.HasInputAuthority)
+            return;
         OnUiHandler?.Invoke();
         Debug.Log($"{nameof(LogOutOnButtonClick)}");
-    }
+    }*/
     #endregion
 
     #region Public methods
     public void ScaleDownImageOnButtonClick(Transform transform)
     {
+        if (!Object.HasInputAuthority)
+            return;
         transform.localScale = Vector3.one * 0.5f;
     }
 
     public void ScaleUpImageOnButtonClick(Transform transform)
     {
+        if (!Object.HasInputAuthority)
+            return;
         transform.localScale = Vector3.one;
     }
     #endregion

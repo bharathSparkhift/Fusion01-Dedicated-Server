@@ -1,9 +1,11 @@
 // using Fusion;
 using Cinemachine;
 using Fusion;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CapsulePlayerController : CharacterControlManager
 {
@@ -33,7 +35,7 @@ public class CapsulePlayerController : CharacterControlManager
 
 
     #region Public fields
-    public NetworkRunner _networkRunner { get; private set; }
+    // public NetworkRunner _networkRunner { get; private set; }
     public CinemachineVirtualCamera _tppVirtualCamera;
     public Transform _mainCamera;
     public bool rayHit;
@@ -66,9 +68,9 @@ public class CapsulePlayerController : CharacterControlManager
 
     private void OnEnable()
     {
-        _networkRunner = Runner;
-        UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
-        UiHandler.OnUiHandler += DestroyPlayerOnLeft;
+        // _networkRunner = Runner;
+        /*UiHandler.OnUiHandler -= DestroyPlayerOnLeft;
+        UiHandler.OnUiHandler += DestroyPlayerOnLeft;*/
         Debug.Log($"<color=green>{nameof(CapsulePlayerController)} \t </color>");
     }
 
@@ -123,6 +125,7 @@ public class CapsulePlayerController : CharacterControlManager
         {
             Move(inputStorageOut);  
             Jump(inputStorageOut);
+            Logout(inputStorageOut);
         }
         DetectGround();
 
@@ -133,6 +136,8 @@ public class CapsulePlayerController : CharacterControlManager
             Debug.Log("Timer Expired");
         }
     }
+
+    
     #endregion
 
     #region Base class methods
@@ -157,6 +162,16 @@ public class CapsulePlayerController : CharacterControlManager
             jumping = true;
             Debug.Log($"Jump is pressed.");
         } 
+    }
+
+    private void Logout(InputStorage inputStorageOut)
+    {
+        if (inputStorageOut.PlayerButtons.IsSet(PlayerInputButtons.Logout))
+        {
+            Runner.Shutdown();
+            SceneManager.LoadSceneAsync(1);
+            Debug.Log($"<color=red>Player got shut down</color>");
+        }
     }
     #endregion
 
@@ -195,13 +210,13 @@ public class CapsulePlayerController : CharacterControlManager
 
     }
 
-    void DestroyPlayerOnLeft()
+    /*void DestroyPlayerOnLeft()
     {
         if (!Object.HasInputAuthority)
             return;
         Runner.Shutdown();
         Debug.Log($"{nameof(CapsulePlayerController)} \t {nameof(DestroyPlayerOnLeft)}");
-    }
+    }*/
     #endregion
 
     #region public methods
