@@ -88,7 +88,7 @@ namespace LegacyLoot_API
         /// <summary>
         /// Kill all the running server OnButtonClick
         /// </summary>
-        public async void ShutDownServer()
+        public void ShutDownServer()
         {
             
             ServerGameController serverGameController = FindObjectOfType<ServerGameController>();
