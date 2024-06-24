@@ -188,9 +188,17 @@ public class CapsulePlayerController : CharacterControlManager
     {
         if (inputStorageOut.PlayerButtons.IsSet(PlayerInputButtons.Logout))
         {
-            Runner.Shutdown();
-            SceneManager.LoadSceneAsync(1);
-            Debug.Log($"<color=red>Player got shut down</color>");
+            // Check if this instance of the player controller belongs to the local player
+            if (Object.HasInputAuthority)
+            {
+                // Shutdown the runner (assuming Runner.Shutdown() is specific to the local player)
+                Runner.Shutdown();
+
+                // Load a new scene (assuming SceneManager.LoadSceneAsync(1) should affect only the local player)
+                SceneManager.LoadSceneAsync(1);
+
+                Debug.Log($"<color=red>Player got shut down</color>");
+            }
         }
     }
     #endregion

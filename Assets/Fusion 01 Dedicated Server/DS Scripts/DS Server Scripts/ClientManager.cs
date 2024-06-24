@@ -225,7 +225,7 @@ namespace LegacyLoot
 
             Debug.Log($"{nameof(ClientManager)} \t {nameof(OnPlayerLeft)}");
             // Load the client scene.
-            SceneManager.LoadSceneAsync(1);
+            // SceneManager.LoadSceneAsync(1);
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)

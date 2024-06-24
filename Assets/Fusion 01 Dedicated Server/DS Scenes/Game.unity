@@ -11211,9 +11211,9 @@ MonoBehaviour:
   WordCount: 0
   _interpolationDataSource: 0
   jumpButton: {fileID: 1332224896}
-  goldCoinCountText: {fileID: 0}
-  silverCoinCountText: {fileID: 0}
-  bronzeCoinCountText: {fileID: 0}
+  goldCoinCountText: {fileID: 2000458295}
+  silverCoinCountText: {fileID: 523300996}
+  bronzeCoinCountText: {fileID: 526600174}
 --- !u!114 &1827743079
 MonoBehaviour:
   m_ObjectHideFlags: 0
