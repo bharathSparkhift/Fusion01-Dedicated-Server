@@ -28,7 +28,8 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     PlayerRef           _playerRef;
 
 
-    
+    /*bool _touchPadDetected;
+    TouchPad _touchPad;*/
 
     #region Monobehaviour callbacks
     private void Awake()
