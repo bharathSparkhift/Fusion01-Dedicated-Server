@@ -99,9 +99,6 @@ namespace LegacyLoot
         }
         #endregion
 
-        #region Private fields
-        #endregion
-
         public IEnumerator UpdateUi(int index, GameRoom gameRoom)
         {
             foreach(var client in clientIndividualSessionUis)
@@ -182,7 +179,7 @@ namespace LegacyLoot
                 SessionName = clientIndividualSessionUis[index].RoomName,
                 GameMode = gameMode,
                 SceneManager = runner.gameObject.AddComponent<NetworkSceneManagerDefault>(),
-                Scene = SceneManager.GetActiveScene().buildIndex + 1,
+                Scene = 1, // SceneManager.GetActiveScene().buildIndex
                 CustomPhotonAppSettings = appSettings,
                 DisableClientSessionCreation = true,
                 
