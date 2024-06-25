@@ -29,6 +29,7 @@ public class CapsulePlayerController : CharacterControlManager
 
     [Space(20)]
     [SerializeField] Bullet bullet;
+    [SerializeField] CapsuleWeaponController capsuleWeaponController;
     #endregion
 
     #region Private fields
@@ -42,6 +43,7 @@ public class CapsulePlayerController : CharacterControlManager
     #region Public fields
     public NetworkRunner _networkRunner { get; private set; }
     public CinemachineVirtualCamera _tppVirtualCamera;
+    // public CinemachinePOV cinemachinePOV;
     public Transform _mainCamera;
     // public bool rayHit;
     public LagCompensatedHit lagCompensatedHit;
@@ -101,6 +103,7 @@ public class CapsulePlayerController : CharacterControlManager
             Move(inputStorageOut);  
             Jump(inputStorageOut);
             Fire(inputStorageOut);
+            capsuleWeaponController.RotateGunUpDown(inputStorageOut.CinemachineCameraVerticalAxis);
             Logout(inputStorageOut);
         }
         DetectGround();
@@ -143,9 +146,7 @@ public class CapsulePlayerController : CharacterControlManager
     {
         if (inputStorageOut.PlayerButtons.IsSet(PlayerInputButtons.Fire) && !firing)
         {
-            firing = true;
-            bullet.gameObject.SetActive(true);
-            
+            capsuleWeaponController.FireBullet();
             Debug.Log($"Fire is pressed");
         }
     }

@@ -1,21 +1,27 @@
+using Cinemachine;
 using Fusion;
 using Fusion.Sockets;
 using Game15Server;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 {
 
 
-    [field: SerializeField] public TouchPad _touchPad { get; private set; }
+    [field: SerializeField] public TouchPad touchPad { get; private set; }
     [SerializeField] private Camera         _camera;
-    [SerializeField] private double         _ping;
+    // [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    [SerializeField] private double         ping;
+    [SerializeField] bool touchPadDetected, cameraDetected;
+    [SerializeField] private GameObject[] gameSceneRootGameObjects;
+
 
     InputControls       _inputControls;
     Vector2             _move;
@@ -27,10 +33,8 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
     NetworkRunner       _currentNetworkRunner;
     PlayerRef           _playerRef;
+    
 
-
-    /*bool _touchPadDetected;
-    TouchPad _touchPad;*/
 
     #region Monobehaviour callbacks
     private void Awake()
@@ -71,7 +75,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
         _weaponCollect  = _inputControls.Player.ItemCollect.IsPressed();
 
-        _logout = _inputControls.Player.Logout.IsPressed();
+        _logout         = _inputControls.Player.Logout.IsPressed();
     }
 
 
@@ -80,15 +84,24 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     #region Networkbehaviour callbacks
     public override void Render()
     {
-        if (_touchPad != null)
+        if (touchPad != null)
             return;
 
-        _touchPad = GameObject.FindObjectOfType<TouchPad>();
-        _camera = GameObject.FindObjectOfType<Camera>();
+        
+        if(touchPad == null)
+        {
+            touchPad = GameObject.FindObjectOfType<TouchPad>();
+        }
+        if(_camera == null)
+        {
+            _camera = GameObject.FindAnyObjectByType<Camera>();
+        }
+        
+
 
         if (_playerRef == null)
             return;
-        _ping = Runner.GetPlayerRtt(_playerRef) * 1000;
+        ping = Runner.GetPlayerRtt(_playerRef) * 1000;
 
 
     }
@@ -112,12 +125,8 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
         _inputStorage.PlayerButtons.Set(PlayerInputButtons.Logout, _logout);
 
-        
-
-        // Check for camera
         if (_camera != null)
-        {
-            // Camera Y rotation angle
+        {    
             _inputStorage.CameraYrotation = _camera.transform.localEulerAngles.y;
         }
         input.Set(_inputStorage);

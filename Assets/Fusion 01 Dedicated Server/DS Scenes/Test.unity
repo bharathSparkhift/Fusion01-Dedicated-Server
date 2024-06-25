@@ -138,12 +138,12 @@ GameObject:
   - component: {fileID: 90202072}
   - component: {fileID: 90202073}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &90202068
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -270,7 +270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spehere: {fileID: 90202067}
-  force: 15
+  force: 25
+  disableDelay: 2
 --- !u!1 &580753276
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 692452040}
-  bullet: {fileID: 0}
+  bullet: {fileID: 90202071}
   bullets: []
 --- !u!1 &1297353039
 GameObject:

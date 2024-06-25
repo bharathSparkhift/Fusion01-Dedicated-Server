@@ -6,6 +6,7 @@ public class Test1 : MonoBehaviour
 {
     [SerializeField] GameObject spehere;
     [SerializeField] float force = 15;
+    [SerializeField] float disableDelay = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -15,30 +16,24 @@ public class Test1 : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        spehere.transform.position = Vector3.zero;
-        Debug.Log($"{nameof(OnCollisionEnter)}");
+        DisableBullet();
     }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        spehere.transform.position = Vector3.zero;
-        Debug.Log($"{nameof(OnTriggerEnter)}");
-    }*/
 
     private void OnEnable()
     {
-        
+        spehere.gameObject.SetActive(true);
+        spehere.GetComponent<Rigidbody>().AddForce(transform.forward, ForceMode.Impulse);
+        Invoke(nameof(DisableBullet), disableDelay);
     }
 
-    // Update is called once per frame
-    void Update()
+    void DisableBullet()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
-        {
-            spehere.gameObject.SetActive(true);
-            spehere.GetComponent<Rigidbody>().AddForce(transform.forward, ForceMode.Impulse);
-  
-        }
+        
+        spehere.gameObject.SetActive(false);
+        spehere.transform.position = Vector3.zero;
+        CancelInvoke(nameof(DisableBullet));
+        Debug.Log($"{nameof(OnCollisionEnter)}");
     }
 
 }

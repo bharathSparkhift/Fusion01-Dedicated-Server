@@ -22,10 +22,21 @@ public class WeaponTest1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (bullets.Count > 0)
+            {
+                bullet = GetBulletFromPool();
+                bullet.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("<color=yellow>out of ammo</color>");
+            }
+        }
     }
 
-    Transform GetBulletsFromPool()
+    Transform GetBulletFromPool()
     {
         Transform _bullet = null;
         foreach(var bullet in bullets)

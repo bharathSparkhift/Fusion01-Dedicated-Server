@@ -16,6 +16,7 @@ public struct InputStorage : INetworkInput
 {
     public Vector2 Move;
     public float CameraYrotation;
+    public float CinemachineCameraVerticalAxis;
     public NetworkButtons PlayerButtons;
 
 }

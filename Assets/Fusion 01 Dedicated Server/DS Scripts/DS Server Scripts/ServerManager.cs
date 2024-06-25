@@ -68,13 +68,13 @@ namespace LegacyLoot
 
         private void OnDestroy()
         {
-            
+            APIHandler.ShutDownServer();
         }               
 
         private void OnApplicationQuit()
         {
 
-            APIHandler.ShutDownServer();
+            
         }
 
         
