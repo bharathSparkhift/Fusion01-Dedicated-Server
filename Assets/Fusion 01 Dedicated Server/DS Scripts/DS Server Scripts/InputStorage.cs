@@ -7,7 +7,9 @@ enum PlayerInputButtons
 {
     Jump,
     WeaponCollect,
+    Fire,
     Logout
+    
 }
 
 public struct InputStorage : INetworkInput

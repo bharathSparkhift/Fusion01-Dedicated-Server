@@ -62,6 +62,15 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""376569e0-6f57-4ad4-94e3-a81988da4f4c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -163,6 +172,17 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""action"": ""Logout"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3e78dd1-94e3-435a-9c60-5288aec62aff"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -175,6 +195,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         m_Player_ItemCollect = m_Player.FindAction("ItemCollect", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Logout = m_Player.FindAction("Logout", throwIfNotFound: true);
+        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -240,6 +261,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ItemCollect;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Logout;
+    private readonly InputAction m_Player_Fire;
     public struct PlayerActions
     {
         private @InputControls m_Wrapper;
@@ -248,6 +270,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         public InputAction @ItemCollect => m_Wrapper.m_Player_ItemCollect;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Logout => m_Wrapper.m_Player_Logout;
+        public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,6 +292,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Logout.started += instance.OnLogout;
             @Logout.performed += instance.OnLogout;
             @Logout.canceled += instance.OnLogout;
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -285,6 +311,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @Logout.started -= instance.OnLogout;
             @Logout.performed -= instance.OnLogout;
             @Logout.canceled -= instance.OnLogout;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -308,5 +337,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         void OnItemCollect(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLogout(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }

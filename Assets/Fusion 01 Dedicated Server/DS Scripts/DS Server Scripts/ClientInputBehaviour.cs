@@ -21,6 +21,7 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
     Vector2             _move;
     bool                _jump;
     bool                _weaponCollect;
+    bool                _fire;
     bool                _logout;
     GameSceneManager    _gameSceneManager;
 
@@ -66,6 +67,8 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
         _jump           = _inputControls.Player.Jump.IsPressed();
 
+        _fire           = _inputControls.Player.Fire.IsPressed();
+
         _weaponCollect  = _inputControls.Player.ItemCollect.IsPressed();
 
         _logout = _inputControls.Player.Logout.IsPressed();
@@ -105,7 +108,11 @@ public class ClientInputBehaviour : SimulationBehaviour, INetworkRunnerCallbacks
 
         _inputStorage.PlayerButtons.Set(PlayerInputButtons.Jump, _jump);
 
+        _inputStorage.PlayerButtons.Set(PlayerInputButtons.Fire, _fire);
+
         _inputStorage.PlayerButtons.Set(PlayerInputButtons.Logout, _logout);
+
+        
 
         // Check for camera
         if (_camera != null)

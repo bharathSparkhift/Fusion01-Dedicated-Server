@@ -177,8 +177,6 @@ namespace LegacyLoot
         {
             var appSettings = PhotonAppSettings.Instance.AppSettings.GetCopy();
 
-            // appSettings.FixedRegion = _region.ToString().ToLower(); 
-
             return runner.StartGame(new StartGameArgs()
             {
                 SessionName = clientIndividualSessionUis[index].RoomName,
@@ -200,19 +198,7 @@ namespace LegacyLoot
         public void RegionOnValueChanged(int value)
         {
 
-            /*switch (value)
-            {
-                case 0:
-                    _region = Region.asia;
-                    break;
-                case 1:
-                    _region = Region.kr;
-                    break;
-                case 2:
-                    _region = Region.us;
-                    break;
-            }
-            Debug.Log($"{nameof(RegionOnValueChanged)} \t Region name {_region}");*/
+            
         }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -224,8 +210,6 @@ namespace LegacyLoot
         {
 
             Debug.Log($"{nameof(ClientManager)} \t {nameof(OnPlayerLeft)}");
-            // Load the client scene.
-            // SceneManager.LoadSceneAsync(1);
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)

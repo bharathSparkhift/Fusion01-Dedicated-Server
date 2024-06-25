@@ -22,6 +22,10 @@ public class CharacterControlManager : NetworkBehaviour
     {
 
     }
+    public virtual void Fire(InputStorage inputStorageOut)
+    {
+
+    }
     #endregion
 
 
