@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3570938920219632255
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TG_Water Material
+  m_Shader: {fileID: 4800000, guid: e9c187ed7acbde74ba091eba0a966f66, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2999
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_8D156BB7:
+        m_Texture: {fileID: 2800000, guid: 9d4c70095fbc2cd42a70938a7cc50f14, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_8F4A6467:
+        m_Texture: {fileID: 2800000, guid: 58229332c85255440af75e46dd9849de, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_2244DCE3: 0.95
+    - Vector1_2567DC63: 0
+    - Vector1_27B740: 2
+    - Vector1_3D14AC92: 0.664
+    - Vector1_8D629C3: 5
+    - Vector1_CA9A9CD9: 2
+    - Vector1_CCC2E891: 0.699
+    - Vector1_DFD163AA: 0
+    - Vector1_FA7B1BA: 4
+    - _QueueControl: -1
+    - _QueueOffset: 0
+    m_Colors:
+    - Vector2_B205D3B9: {r: 200, g: 200, b: 0, a: 0}
+    - Vector2_F8B1C5D0: {r: 100, g: 100, b: 0, a: 0}
+    - _DeepColor: {r: 0.10980373, g: 0.14117628, b: 0.12941158, a: 1}
+    - _ShallowColor: {r: 0.05170837, g: 0.13207495, b: 0.10528604, a: 0.5882353}
+  m_BuildTextureStacks: []
