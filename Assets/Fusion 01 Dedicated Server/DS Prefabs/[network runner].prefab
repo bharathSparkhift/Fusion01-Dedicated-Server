@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6997794957565080927}
   - component: {fileID: 1267195224691417463}
   - component: {fileID: 7521315700465909971}
+  - component: {fileID: -143229086544077166}
+  - component: {fileID: 5815180306904551023}
   m_Layer: 0
   m_Name: '[network runner]'
   m_TagString: Untagged
@@ -73,3 +75,79 @@ MonoBehaviour:
   BVHDepth: 0
   BVHNodes: 0
   TotalHitboxes: 0
+--- !u!114 &-143229086544077166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7177965887145380863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1475fe8a5b3fb94ebbed9cea1c7fd82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner_: {fileID: 6997794957565080927}
+  spawnPosition: {x: 0, y: 7, z: 0}
+  moveDirection: {x: 0, y: 0}
+  player: {fileID: 7734893632124921607, guid: 57806d0548bfef44a9fee89e9defa837, type: 3}
+--- !u!114 &5815180306904551023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7177965887145380863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -232609262, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInput:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInputMissing:
+    m_PersistentCalls:
+      m_Calls: []
+  OnConnectedToServer:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisconnectedFromServer:
+    m_PersistentCalls:
+      m_Calls: []
+  OnConnectRequest:
+    m_PersistentCalls:
+      m_Calls: []
+  OnConnectFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayerJoined:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayerLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSimulationMessage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnShutdown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSessionListUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCustomAuthenticationResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHostMigration:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSceneLoadDone:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSceneLoadStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReliableData:
+    m_PersistentCalls:
+      m_Calls: []

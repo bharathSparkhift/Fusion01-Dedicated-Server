@@ -47,8 +47,8 @@ ModelImporter:
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
@@ -528,13 +528,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: SM_HumanMale_Ingame_v012(Clone)
+    - name: SM_HumanMale_Ingame_v012 (1)(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Geometry
-      parentName: SM_HumanMale_Ingame_v012(Clone)
+      parentName: SM_HumanMale_Ingame_v012 (1)(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 0.01, y: 0.01, z: 0.01}
@@ -554,7 +554,7 @@ ModelImporter:
       rotation: {x: 0.00000014106499, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Root
-      parentName: SM_HumanMale_Ingame_v012(Clone)
+      parentName: SM_HumanMale_Ingame_v012 (1)(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 0.01, y: 0.01, z: 0.01}
@@ -880,7 +880,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 35fb322750df43142bda977ee5834831, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 5e2ff60935321804ebed1587fdc9d790, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Initialize the Network Runner in the Single Mode.
 /// </summary>
-public class Single_Mode_Network_Runner_Handler : MonoBehaviour
+public class Single_Mode_Network_Runner_Initializer : MonoBehaviour
 {
     /// <summary>
     /// Network runner
@@ -30,25 +30,25 @@ public class Single_Mode_Network_Runner_Handler : MonoBehaviour
 
     async void Initialize_Runner_In_Single_Mode()
     {
-        NetworkRunner runner = Instantiate(networkRunner);
+        //NetworkRunner runner = Instantiate(networkRunner);
 
 
         // Set up the NetworkRunner
         var startGameArgs = new StartGameArgs
         {
-            GameMode = GameMode.Single, // Set the game mode to Single
+            GameMode = GameMode.AutoHostOrClient, // Set the game mode to Single
             Scene = 1, // SceneManager.GetActiveScene().buildIndex, // Current active scene
             SessionName = "SinglePlayerSession", // Optional: name your session
             PlayerCount = 1 // Single player mode
         };
-        var result = await runner.StartGame(startGameArgs);
+        var result = await networkRunner.StartGame(startGameArgs);
         if (result.Ok)
         {
-            Debug.Log($"<color=green>{nameof(Single_Mode_Network_Runner_Handler)} \t {nameof(Initialize_Runner_In_Single_Mode)} \t result {result.Ok}</color>");
+            Debug.Log($"<color=green>{nameof(Single_Mode_Network_Runner_Initializer)} \t {nameof(Initialize_Runner_In_Single_Mode)} \t result {result.Ok}</color>");
         }
         else
         {
-            Debug.Log($"<color=red>{nameof(Single_Mode_Network_Runner_Handler)} \t {nameof(Initialize_Runner_In_Single_Mode)} \t result {result.ShutdownReason}</color>");
+            Debug.Log($"<color=red>{nameof(Single_Mode_Network_Runner_Initializer)} \t {nameof(Initialize_Runner_In_Single_Mode)} \t result {result.ShutdownReason}</color>");
         }
     }
 }
